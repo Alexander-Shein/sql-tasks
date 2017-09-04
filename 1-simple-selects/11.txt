@@ -1,0 +1,3 @@
+Create a SQL query to get Product list (name, unit price) where products cost between $5 and $15:
+
+| ProductName | UnitPrice |

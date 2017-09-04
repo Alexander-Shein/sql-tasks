@@ -1,0 +1,5 @@
+Create a query to return:
+
+| Order Id | Total Order Price | Total Order Discount % |
+
+Ordered by order id descending.

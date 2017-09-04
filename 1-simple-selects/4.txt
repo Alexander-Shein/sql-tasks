@@ -1,0 +1,5 @@
+Create a query to return:
+
+| Customer Id | Total number of Orders | % of all orders |
+ 
+order data by % - higher percent at the top.

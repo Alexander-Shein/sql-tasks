@@ -1,0 +1,7 @@
+Create a query to return:
+
+Id | Employee Name | Title | City
+
+Id - Employee id.
+Employee Name column - First Name and Last name separated by a whitespace.
+Ordered by City and then by Employee Name.

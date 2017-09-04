@@ -1,0 +1,3 @@
+Create SQL query to display the average price of each categories's products:
+
+| CategoryName | AvgPrice |

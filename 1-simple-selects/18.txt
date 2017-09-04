@@ -1,0 +1,3 @@
+Create a SQL query to calcualte total orders count by each day in 1998:
+
+| Order Date | Total Number of Orders |

@@ -1,0 +1,3 @@
+Create a SQL query to return all orders where ship postal code is provided:
+
+| OrderId | CustomerId | ShipCountry |

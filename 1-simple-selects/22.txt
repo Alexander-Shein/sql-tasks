@@ -1,0 +1,3 @@
+Create a SQL query to display the name of each customer along with their most expensive purchased product:
+
+| CompanyName | ProductName | PricePerItem |

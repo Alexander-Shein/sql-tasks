@@ -1,0 +1,3 @@
+Create a SQL query to return the total number of orders for every month in 1997 year:
+
+| January | February | March | April | May | June | July | August | September | November | December |

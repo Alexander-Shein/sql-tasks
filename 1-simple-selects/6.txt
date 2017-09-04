@@ -1,0 +1,3 @@
+Create a query to return all products with category and supplier company names:
+
+| ProductName | CategoryName | SupplierCompanyName |

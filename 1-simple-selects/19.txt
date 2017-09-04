@@ -1,0 +1,4 @@
+Create a SQL query to display customer details whose total orders amount is more than 10000$:
+
+| CustomerId | CompanyName | TotalOrdersAmount, $ |
+

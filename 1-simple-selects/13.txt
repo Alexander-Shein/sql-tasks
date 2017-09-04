@@ -1,0 +1,3 @@
+Create a SQL query to count current and discontinued products:
+
+| TotalOfCurrentProducts | TotalOfDiscontinuedProducts |

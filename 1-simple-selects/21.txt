@@ -1,0 +1,3 @@
+Write a SQL statement to get the maximum purchase amount of all the orders.
+
+| Order Id | Maximum Purchase Amount, $ |

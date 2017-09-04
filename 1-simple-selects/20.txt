@@ -1,0 +1,3 @@
+Create a SQL query to find the employee that sold products for the largest amount:
+
+| EmployeeId | Employee Full Name | Amount, $ |
