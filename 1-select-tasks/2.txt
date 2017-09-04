@@ -1,5 +1,3 @@
-Create a query to return:
+Create a query to return a list ordered by order id descending:
 
-| Order Id | Total Order Price | Total Order Discount % |
-
-Ordered by order id descending.
+| Order Id | Order Total Price | Total Order Discount, % |
