@@ -1,7 +1,5 @@
-Create a query to return:
+Create a SQL query to return next data ordered by city and then by name:
 
-Id | Employee Name | Title | City
+| Employy Id | Employee Full Name | Title | City |
 
-Id - Employee id.
-Employee Name column - First Name and Last name separated by a whitespace.
-Ordered by City and then by Employee Name.
+[Employee Full Name] - First Name and Last Name.
