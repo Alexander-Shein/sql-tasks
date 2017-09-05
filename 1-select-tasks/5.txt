@@ -1,4 +1,8 @@
-Return all products where product name starts with 'A', 'B', .... 'F' ordered by name.
+--Return all products where product name starts with 'A', 'B', .... 'F' ordered by name.
 
-| ProductId | ProductName | QuantityPerUnit |
+--| ProductId | ProductName | QuantityPerUnit
+
+SELECT [p].[ProductID], [p].[ProductName], [p].[QuantityPerUnit] FROM [dbo].[Products][p]
+WHERE [p].[ProductName] LIKE '[A-F]%'
+ORDER BY [p].[ProductName]
 
