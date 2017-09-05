@@ -1,2 +1,6 @@
-Write a query to get discontinued Product list:
-| ProductId | Name | 
+--10Write a query to get discontinued Product list:
+--| ProductId | Name | 
+
+SELECT [p].[ProductId], [p].[ProductName] as [Name]
+FROM [dbo].[Products][p]
+WHERE [p].[Discontinued] = 1
