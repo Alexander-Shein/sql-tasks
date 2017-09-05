@@ -1,3 +1,9 @@
-Create a query to return a list ordered by order id descending:
+--Create a query to return a list ordered by order id descending:
 
-| Order Id | Order Total Price | Total Order Discount, % |
+--| Order Id | Order Total Price | Total Order Discount, % |
+
+
+SELECT [o].[OrderID] as [Order Id], SUM([o].[UnitPrice]) as [Order Total Price], SUM([o].[Discount]) as [Total Order Discount, %]
+FROM [dbo].[Order Details][o]
+GROUP BY [o].OrderID
+ORDER BY [o].[OrderID] DESC
