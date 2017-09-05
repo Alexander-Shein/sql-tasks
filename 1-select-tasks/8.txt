@@ -2,6 +2,6 @@
 
 --| CategoryName | TotalNumberOfProducts |
 
-SELECT [c].[CategoryName], SUM([p].UnitsInStock) as [TotalNumberOfProducts] FROM [dbo].[Categories] [c]
+SELECT [c].[CategoryName], SUM([p].[UnitsInStock]) as [TotalNumberOfProducts] FROM [dbo].[Categories] [c]
 JOIN [dbo].[Products] [p] ON [p].[CategoryID] = [c].[CategoryID] 
 GROUP BY [c].[CategoryName]
