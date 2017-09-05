@@ -4,4 +4,3 @@ Create a SQL query to return next data ordered by city and then by name:
 
 [Employee Full Name] - First Name and Last Name.
 
-Maksim Sarvas "SELECT [e].[EmployeeID],[e].[FIRSTNAME]+' '+[e].[LASTNAME] AS [Employee Full Name],[Title],[City]  FROM [dbo].[Employees] [e];"
