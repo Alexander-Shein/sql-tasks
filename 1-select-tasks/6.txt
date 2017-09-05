@@ -2,7 +2,7 @@
 
 --| ProductName | CategoryName | SupplierCompanyName |
 
-SELECT [p].ProductName, [c].[CategoryName], [s].[CompanyName] as [SupplierCompanyName]
+SELECT [p].[ProductName], [c].[CategoryName], [s].[CompanyName] as [SupplierCompanyName]
 FROM [dbo].[Products][p]
-JOIN [dbo].[Categories][c] ON [p].CategoryID = [c].CategoryID
+JOIN [dbo].[Categories][c] ON [p].[CategoryID] = [c].[CategoryID]
 JOIN [dbo].[Suppliers][s] ON [s].[SupplierID] = [p].[SupplierID]
