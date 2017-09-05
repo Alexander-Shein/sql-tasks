@@ -1,3 +1,9 @@
-Create a SQL query to calcualte total orders count by each day in 1998:
 
-| Order Date | Total Number of Orders |
+--18Create a SQL query to calcualte total orders count by each day in 1998:
+
+--| Order Date | Total Number of Orders |
+
+SELECT [o].[OrderDate], COUNT([o].[OrderDate]) as [Total Number of Orders]
+FROM [dbo].[Orders][o]
+WHERE [o].[OrderDate] BETWEEN '1998-01-01 00:00:00:00' AND '1998-12-31 00:00:00:00'  
+GROUP BY [o].[OrderDate]
