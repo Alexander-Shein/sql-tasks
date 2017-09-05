@@ -1,4 +1,11 @@
-Create a SQL query to display customer details whose total orders amount is more than 10000$:
+--19Create a SQL query to display customer details whose total orders amount is more than 10000$:
 
-| CustomerId | CompanyName | TotalOrdersAmount, $ |
+--| CustomerId | CompanyName | TotalOrdersAmount, $ |
+
+SELECT [c].[CustomerID], [c].[CompanyName], Sum([od].[UnitPrice]*[od].[Quantity]) as [TotalOrdersAmount]
+FROM [dbo].[Customers] [c]
+JOIN [dbo].[Orders][o] ON [o].[CustomerID] = [c].[CustomerID]
+JOIN [dbo].[Order Details][od] ON [od].[OrderID] = [o].[OrderID]
+GROUP BY [c].[CustomerID], [c].[CompanyName]
+HAVING Sum([od].[UnitPrice]*[od].[Quantity]) > 10000
 
