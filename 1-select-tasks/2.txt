@@ -2,5 +2,4 @@ Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
 
-Maksim Sarvas:'select [od].[OrderID],[od].[Quantity]*[od].[UnitPrice] as[Order Total Price], ([od].[Discount]*[od].[Quantity])/([od].[Quantity]*[od].[UnitPrice])*100 as [Total Order Discount, %] FROM [dbo].[Order Details] [od];
-'
+
