@@ -1,5 +1,13 @@
-Create a SQL query to return next data ordered by city and then by name:
+--Create a SQL query to return next data ordered by city and then by name:
 
-| Employy Id | Employee Full Name | Title | City |
+--| Employy Id | Employee Full Name | Title | City |
 
-[Employee Full Name] - First Name and Last Name.
+--[Employee Full Name] - First Name and Last Name.
+
+USE Northwind
+GO
+
+SELECT [e].[EmployeeID] as [Employy Id], [e].[FirstName] + ' ' + [e].[LastName] as [Employee Full Name], [e].[Title], [e].[City]
+FROM [dbo].[Employees] [e]
+ORDER BY [e].[City], [Employee Full Name]
+GO
