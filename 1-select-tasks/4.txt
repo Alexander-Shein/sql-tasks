@@ -3,3 +3,15 @@ Create a query to return:
 | Customer Id | Total number of Orders | % of all orders |
  
 order data by % - higher percent at the top.
+________________
+
+DECLARE @allOrders int
+SET @allOrders = (SELECT COUNT(*) FROM [dbo].[Orders] [o])
+
+SELECT [c].[CustomerID] AS [Customer Id], COUNT([o].[OrderID]) AS [Total number of orders],
+COUNT([o].[OrderID])/(CAST(@allOrders AS DECIMAL)) * 100 AS [% all of Orders]
+FROM [dbo].[Customers] [c]
+JOIN [dbo].[Orders] [o] 
+ON [c].[CustomerId] = [o].[CustomerID]
+GROUP BY [c].[CustomerID]
+ORDER BY [% all of Orders] DESC;
