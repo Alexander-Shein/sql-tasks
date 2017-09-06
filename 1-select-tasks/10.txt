@@ -1,2 +1,4 @@
 Write a query to get discontinued Product list:
 | ProductId | Name | 
+
+SELECT ProductID, ProductName AS Name, Discontinued  FROM Products WHERE Discontinued=1;
