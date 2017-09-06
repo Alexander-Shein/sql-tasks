@@ -2,6 +2,6 @@
 
 --| ProductName | UnitsInOrder| UnitsInStock |
 
-SELECT [p].[ProductName], [p].[UnitsOnOrder], [p].[UnitsInStock]
+SELECT [p].[ProductName], [p].[UnitsOnOrder] AS [UnitsInOrder], [p].[UnitsInStock]
 FROM [dbo].[Products][p]
 WHERE [p].[UnitsInStock] < [p].[UnitsOnOrder]
