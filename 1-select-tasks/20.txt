@@ -1,3 +1,12 @@
 Create a SQL query to find the employee that sold products for the largest amount:
 
 | EmployeeId | Employee Full Name | Amount, $ |
+
+SELECT TOP (1) [e].[EmployeeID],
+([e].[FirstName] +' '+ [e].[LastName]) AS 'Employee Full Name',
+MAX([od].[Quantity] * [od].[UnitPrice]) AS 'Amount, $'
+FROM [Orders] [o]
+JOIN [Employees] [e] ON [e].[EmployeeId] = [o].[EmployeeId]
+JOIN [Order Details] [od] ON [o].[OrderId] = [od].[OrderId]
+GROUP BY [e].[EmployeeId], [e].[FirstName], [e].[LastName]
+ORDER BY MAX([od].[Quantity] * [od].[UnitPrice]) DESC;
