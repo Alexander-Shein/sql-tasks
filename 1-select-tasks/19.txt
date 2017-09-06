@@ -1,4 +1,14 @@
 Create a SQL query to display customer details whose total orders amount is more than 10000$:
 
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
+_______
 
+SELECT [cst].[CustomerID], [cst].[CompanyName], 
+SUM([odsDet].[UnitPrice] * [odsDet].[Quantity] - ([odsDet].[UnitPrice] * [odsDet].[Quantity]) * [odsDet].[Discount]) AS [TotalOrdersAmount, $] 
+FROM [Northwind].[dbo].[Customers] [cst]
+JOIN [Northwind].[dbo].[Orders] [ods]
+ON [cst].[CustomerID] = [ods].[CustomerID]
+JOIN [Northwind].[dbo].[Order Details] [odsDet]
+ON [odsDet].[OrderID] = [ods].[OrderID]
+GROUP BY [cst].[CustomerID], [cst].[CompanyName]
+HAVING SUM([odsDet].[UnitPrice] * [odsDet].[Quantity] - ([odsDet].[UnitPrice] * [odsDet].[Quantity]) * [odsDet].[Discount]) > 10000
