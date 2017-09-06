@@ -1,3 +1,8 @@
 Create a SQL query to get Product list (name, unit price) where products cost between $5 and $15:
 
 | ProductName | UnitPrice |
+___________
+
+SELECT [p].[ProductName], [p].[UnitPrice]
+FROM [Northwind].[dbo].[Products] [p]
+WHERE [p].[UnitPrice] BETWEEN 5 AND 15
