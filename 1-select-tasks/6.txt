@@ -1,3 +1,11 @@
 Create a query to return all products with category and supplier company names:
 
 | ProductName | CategoryName | SupplierCompanyName |
+___________
+
+SELECT [prt].[ProductName], [cat].[CategoryName], [spl].[CompanyName] AS [SupplierCompanyName]
+FROM [Northwind].[dbo].[Products] [prt]
+JOIN [Northwind].[dbo].[Suppliers] [spl]
+ON [spl].[SupplierID] = [prt].[SupplierID]
+JOIN [Northwind].[dbo].[Categories] [cat] 
+ON [prt].[CategoryID] = [cat].[CategoryID]
