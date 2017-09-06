@@ -2,6 +2,7 @@
 
 --| Order Id | Maximum Purchase Amount, $ |
 
-SELECT [o].[OrderID], MAX([o].[UnitPrice]*[o].[Quantity]) AS [Maximum Purchase Amount, $]
+SELECT TOP(1) [o].[OrderID], SUM([o].[UnitPrice]*[o].[Quantity]) AS [Maximum Purchase Amount, $]
 FROM[dbo].[Order Details][o]
 GROUP BY [o].[OrderID]
+ORDER BY SUM ([o].[UnitPrice]*[o].[Quantity]) DESC
