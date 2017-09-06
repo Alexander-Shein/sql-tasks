@@ -1,3 +1,9 @@
 Create SQL query to display the average price of each categories's products:
 
 | CategoryName | AvgPrice |
+
+--task17
+SELECT [Categories].[CategoryName] AS [CategoryName], AVG([p].[UnitPrice]) AS [AvgPrice]
+FROM [dbo].[Products] [p]
+JOIN [dbo].[Categories] ON [p].[CategoryID] = [Categories].[CategoryID] 
+GROUP BY [Categories].[CategoryName];
