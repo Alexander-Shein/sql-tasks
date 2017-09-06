@@ -6,6 +6,4 @@ Full Name - title of courtesy with full name.
 Order data by first column.
 Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
 
-SELECT e.EmployeeID,
-CONCAT(e.LastName,' ',e.FirstName) AS EmploeesFullName,
-CONCAT(r.LastName,' ',r.FirstName) AS ReportsTo FROM Employees e JOIN Employees r ON e.ReportsTo = r.EmployeeID;
+SELECT e.EmployeeID, e.LastName + ' ' + e.FirstName AS EmploeesFullName, ISNULL(r.LastName + ' ' + r.FirstName, '-') FROM Employees e LEFT JOIN Employees r ON e.ReportsTo = r.EmployeeID;
