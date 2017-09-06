@@ -1,5 +1,11 @@
-Write a SQL query to get Product list of twenty most expensive products:
+--12Write a SQL query to get Product list of twenty most expensive products:
 
-| ProductName | UnitPrice |
+--| ProductName | UnitPrice |
 
-Order products by price.
+--Order products by price.
+
+
+SELECT TOP 20  [p].[ProductName], MAX([p].[UnitPrice]) as [UnitPrice]
+FROM  [dbo].[Products] [p]
+GROUP BY [p].[ProductName]
+ORDER BY [UnitPrice] DESC
