@@ -4,3 +4,5 @@ Return all products where product name starts with 'A', 'B', .... 'F' ordered by
 
 SELECT [p].[ProductID] AS [ProductId], [p].[ProductName], [p].[QuantityPerUnit] FROM [dbo].[Products] [p] WHERE [p].[ProductName] LIKE 'A%' OR [p].[ProductName] LIKE 'B%' OR [p].[ProductName] LIKE 'C%' OR [p].[ProductName] LIKE 'D%' OR [p].[ProductName] LIKE 'F%' ORDER BY [p].[ProductName];
 
+SELECT [p].[ProductID] AS [ProductId], [p].[ProductName], [p].[QuantityPerUnit] FROM [dbo].[Products] [p] WHERE [p].[ProductName] LIKE '[A-F]%' ORDER BY [p].[ProductName];
+
