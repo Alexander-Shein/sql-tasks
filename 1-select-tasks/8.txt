@@ -1,3 +1,10 @@
 Create a query to return:
 
 | CategoryName | TotalNumberOfProducts |
+
+QUERY:
+
+SELECT [cat].[CategoryName], COUNT([p].[CategoryID]) AS [TotalNumberOfProducts] 
+FROM [dbo].[Categories] [cat]
+JOIN [dbo].[Products] [p] ON [cat].[CategoryID] = [p].[CategoryID]
+GROUP BY [cat].[CategoryName];
