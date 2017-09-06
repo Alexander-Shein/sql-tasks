@@ -3,3 +3,5 @@ Create a SQL query to return next data ordered by city and then by name:
 | Employy Id | Employee Full Name | Title | City |
 
 [Employee Full Name] - First Name and Last Name.
+
+SELECT EmployeeID, CONCAT(LastName,' ',FirstName) AS EmploeesFullName, Title, City FROM Employees; 
