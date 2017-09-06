@@ -2,3 +2,4 @@ SELECT [cus].[CustomerID], COUNT([ord].[OrderID]) AS 'Total number of Orders',  
 FROM [dbo].[Customers] [cus]
 JOIN [dbo].[Orders] [ord] ON [cus].[CustomerID] = [ord].[CustomerID]
 GROUP BY [cus].[CustomerID] 
+ORDER BY [% of all orders] DESC
