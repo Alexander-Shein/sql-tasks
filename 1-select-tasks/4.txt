@@ -1,9 +1,5 @@
-Return all products where product name starts with 'A', 'B', .... 'F' ordered by name.
+Create a query to return:
 
-| ProductId | ProductName | QuantityPerUnit |
-_________
-
-SELECT [p].[ProductID], [p].[ProductName], [p].[QuantityPerUnit]
-FROM [Northwind].[dbo].[Products] [p]
-WHERE [p].[ProductName] LIKE '[ABCDEF]%'
-ORDER BY [p].[ProductName]
+| Customer Id | Total number of Orders | % of all orders |
+ 
+order data by % - higher percent at the top.
