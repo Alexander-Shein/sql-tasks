@@ -3,3 +3,5 @@ Write a SQL query to get Product list of twenty most expensive products:
 | ProductName | UnitPrice |
 
 Order products by price.
+
+SELECT TOP 12  ProductName, UnitPrice FROM Products ORDER BY UnitPrice DESC;
