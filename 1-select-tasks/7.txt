@@ -12,3 +12,5 @@ ISNULL([rep].[TitleOfCourtesy] + ' ' + [rep].[FirstName] + ' ' + [rep].[LastName
 FROM [Northwind].[dbo].[Employees] [emp]
 LEft JOIN [Northwind].[dbo].[Employees] [rep] ON [emp].[ReportsTo] = [rep].[EmployeeID]
 ORDER BY [emp].[EmployeeID]
+
+ps: CHANGED TASK_4
