@@ -1,3 +1,11 @@
 Create a query to return:
 
 | CategoryName | TotalNumberOfProducts |
+____________
+
+SELECT [cat].[CategoryName], COUNT([cat].[CategoryName]) AS [TotalNumberOfProducts]
+FROM [Northwind].[dbo].[Categories] [cat]
+JOIN [Northwind].[dbo].[Products] [pdt] ON [pdt].[CategoryID] = [cat].[CategoryID]
+GROUP BY [cat].[CategoryName]
+
+PS: TASK_4 UPDATED
