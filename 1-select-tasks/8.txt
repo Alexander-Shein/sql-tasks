@@ -1,3 +1,8 @@
 Create a query to return:
 
 | CategoryName | TotalNumberOfProducts |
+
+Maksm Sarvas:'SELECT [C].[CategoryName], COUNT([P].[ProductID]) AS [TotalNumberOfProducts]
+FROM [dbo].[Products] [P]
+LEFT JOIN [dbo].[Categories] [C] ON [P].[CategoryID] = [C].[CategoryID]
+GROUP BY [C].[CategoryName]'
