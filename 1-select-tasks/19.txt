@@ -2,10 +2,10 @@
 
 --| CustomerId | CompanyName | TotalOrdersAmount, $ |
 
-SELECT [c].[CustomerID], [c].[CompanyName], Sum([od].[UnitPrice]*[od].[Quantity]) as [TotalOrdersAmount]
+SELECT [c].[CustomerID], [c].[CompanyName], SUM([od].[UnitPrice]*[od].[Quantity]) AS [TotalOrdersAmount]
 FROM [dbo].[Customers] [c]
 JOIN [dbo].[Orders][o] ON [o].[CustomerID] = [c].[CustomerID]
 JOIN [dbo].[Order Details][od] ON [od].[OrderID] = [o].[OrderID]
 GROUP BY [c].[CustomerID], [c].[CompanyName]
-HAVING Sum([od].[UnitPrice]*[od].[Quantity]) > 10000
+HAVING SUM([od].[UnitPrice]*[od].[Quantity]) > 10000
 
