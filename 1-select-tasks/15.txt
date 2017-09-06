@@ -1,3 +1,34 @@
 Create a SQL query to return the total number of orders for every month in 1997 year:
 
 | January | February | March | April | May | June | July | August | September | November | December |
+___________
+
+SELECT [1] AS [January], [2] AS [February], [3] AS [March], [4] AS [April], [5] AS [May], [6] AS [June], 
+[7] AS [July], [8] AS [August], [9] AS [September], [10] AS [October], [11] AS [November], [12] AS [November]
+FROM (
+	SELECT MONTH([o].[OrderDate]) as [Monthes], COUNT(*) AS [Counts]
+	FROM [Northwind].[dbo].[Orders] [o]
+	WHERE datepart(YEAR, [o].[OrderDate]) = '1997'
+	GROUP BY MONTH([o].[OrderDate])
+) AS ST
+pivot(
+	AVG(Counts) 
+	FOR Monthes IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
+) as pvt;
+_______ 
+
+PREVIOUS DECISION
+
+SELECT COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 1 THEN 1 END) AS [January],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 2 THEN 1 END) AS [February],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 3 THEN 1 END) AS [March],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 4 THEN 1 END) AS [April],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 5 THEN 1 END) AS [May],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 6 THEN 1 END) AS [June],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 7 THEN 1 END) AS [July],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 8 THEN 1 END) AS [August],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 9 THEN 1 END) AS [September],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 10 THEN 1 END) AS [November],
+COUNT(CASE WHEN datepart(MONTH, [o].[OrderDate]) = 11 THEN 1 END) AS [December]
+FROM [Northwind].[dbo].[Orders] [o]
+WHERE datepart(YEAR, [o].[OrderDate]) = '1997'
