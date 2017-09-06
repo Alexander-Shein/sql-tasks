@@ -1,3 +1,8 @@
 Create a SQL query to get Product list of stock is less than the quantity on order:
 
 | ProductName | UnitsInOrder| UnitsInStock |
+
+--task14 ???????????????????
+SELECT [p].[ProductName] AS [ProductName], [p].[UnitsOnOrder] AS [UnitsInOrder], [p].[UnitsInStock] AS [UnitsInStock]
+FROM [dbo].[Products] [p]
+WHERE [p].[UnitsInStock] < [p].[UnitsOnOrder];
