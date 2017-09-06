@@ -1,3 +1,9 @@
 Create a SQL query to find those customers whose contact name containing the 1st character is 'F' and the 4th character is 'n' and rests may be any character.
 
 | CustomerId | ContactName |
+
+QUERY:
+
+SELECT [c].[CustomerId], [c].[ContactName]
+FROM [dbo].[Customers] [c]
+WHERE [c].[ContactName] LIKE 'F__n%';
