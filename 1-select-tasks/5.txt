@@ -1,4 +1,9 @@
 Return all products where product name starts with 'A', 'B', .... 'F' ordered by name.
 
 | ProductId | ProductName | QuantityPerUnit |
+_________
 
+SELECT [p].[ProductID], [p].[ProductName], [p].[QuantityPerUnit]
+FROM [Northwind].[dbo].[Products] [p]
+WHERE [p].[ProductName] LIKE '[ABCDEF]%'
+ORDER BY [p].[ProductName]
