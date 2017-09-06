@@ -1,3 +1,27 @@
-Create a SQL query to return the total number of orders for every month in 1997 year:
+--15Create a SQL query to return the total number of orders for every month in 1997 year:
 
-| January | February | March | April | May | June | July | August | September | November | December |
+--| January | February | March | April | May | June | July | August | September | November | December | 
+
+SELECT 
+	[1] AS [January],
+	[2] AS [February],
+	[3] AS [March],
+	[4] AS [April],
+	[5] AS [May],
+	[6] AS [June], 
+	[7] AS [July],
+	[8] AS [August],
+	[9] AS [September],
+	[10] AS [October],
+	[11] AS [November],
+	[12] AS [December]
+ FROM (
+ 	SELECT MONTH([o].[OrderDate]) AS [Months], COUNT(*) AS [Counts]
+ 	FROM [dbo].[Orders] [o]
+ 	WHERE YEAR([o].[OrderDate]) = 1997
+ 	GROUP BY MONTH([o].[OrderDate])
+ ) AS [SourceTable]
+ PIVOT(
+ 	AVG(Counts) 
+ 	FOR [Months] IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
+ ) AS [PivotTable]
