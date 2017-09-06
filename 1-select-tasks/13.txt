@@ -1,3 +1,8 @@
 Create a SQL query to count current and discontinued products:
 
-| TotalOfCurrentProducts | TotalOfDiscontinuedProducts |
+| TotalOfCurrentProducts | TotalOfDiscontinuedProducts | 
+
+SELECT COUNT(*) AS TotalOfCurrentProducts,
+(SELECT COUNT(*) 
+FROM Products WHERE Discontinued=1) AS TotalOfDiscontinuedProducts
+FROM Products WHERE Discontinued=0;
