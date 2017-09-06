@@ -1,3 +1,14 @@
 Create a SQL query to count current and discontinued products:
 
 | TotalOfCurrentProducts | TotalOfDiscontinuedProducts |
+
+Maks Sarvas: 'SELECT  '-'  AS [TotalOfCurrentProducts]  , 
+COUNT([OD].[Discount])  AS [TotalOfDiscontinuedProducts]
+FROM [dbo].[Order Details] [OD]
+WHERE [OD].[Discount]>0
+
+UNION
+
+SELECT  COUNT([OD].[ProductID])  AS [TotalOfCurrentProducts]  , 
+'-'  AS [TotalOfDiscontinuedProducts]
+FROM [dbo].[Order Details] [OD]'
