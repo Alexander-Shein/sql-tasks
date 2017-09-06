@@ -1,3 +1,12 @@
 Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
+
+USE NORTHWIND
+
+SELECT [o].[OrderID] AS 'Order Id', SUM([od].[UnitPrice] * [od].[Quantity]) AS 'Order Total Price',
+SUM(([od].[Discount])*100/([od].[UnitPrice])) AS 'Total Order Discount, %'
+FROM [Orders] [o]
+JOIN [Order Details][od] ON [o].[OrderID]=[od].[OrderID]
+GROUP BY [o].[OrderID]
+ORDER BY [o].[OrderID] DESC
