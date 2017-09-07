@@ -1,3 +1,9 @@
 Create a SQL query to return the total number of orders for every month in 1997 year:
 
 | January | February | March | April | May | June | July | August | September | November | December |
+
+  SELECT MONTH([o].[OrderDate]), COUNT([o].[OrderID])
+  FROM
+  [dbo].[Orders] [o]
+  WHERE YEAR([o].[OrderDate])=1997
+  GROUP BY MONTH([o].[OrderDate])
