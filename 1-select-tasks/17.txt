@@ -1,3 +1,10 @@
 Create SQL query to display the average price of each categories's products:
 
 | CategoryName | AvgPrice |
+
+SELECT [c].[CategoryName] AS 'CategoryName',
+AVG([o].[UnitPrice]) AS 'AvgPrice'
+FROM [Products] [p]
+JOIN [Categories] [c] ON [c].[CategoryId] = [p].[CategoryId]
+JOIN [Order Details] [o] ON [o].[ProductId] = [p].[ProductId]
+GROUP BY [c].[CategoryName];
