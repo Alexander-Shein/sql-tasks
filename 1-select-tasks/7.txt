@@ -1,7 +1,15 @@
-Create a query to return all employees and full name of person to whom this employee reports to:
+--7Create a query to return all employees and full name of person to whom this employee reports to:
 
-| EmployeeId | FullName | ReportsTo |
+--| EmployeeId | FullName | ReportsTo |
 
-Full Name - title of courtesy with full name.
-Order data by first column.
-Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
+--Full Name - title of courtesy with full name.
+--Order data by first column.
+--Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
+
+SELECT [e1].[EmployeeID],[e1].[TitleOfCourtesy] + ' ' + [e1].[FirstName] + ' ' + [e1].[LastName] AS [FullName],
+ISNULL ([e2].[TitleOfCourtesy] + ' ' + [e2].[FirstName] + ' ' + [e2].[LastName], '-')  AS [ReportsTo]
+FROM [dbo].[Employees][e1]
+LEFT JOIN [dbo].[Employees][e2] ON [e2].[EmployeeID] = [e1].[ReportsTo]
+ORDER BY [ReportsTo]
+
+--ISNULL ( check_expression , replacement_value )
