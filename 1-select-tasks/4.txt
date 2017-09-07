@@ -11,4 +11,5 @@ SUM(o.OrderID)/COUNT(o.OrderID) AS [Total number of Orders],
 COUNT(o.OrderID)/(CAST(@allOrders AS DECIMAL))*100 AS [% all of Orders]
 FROM dbo.Customers c
 JOIN dbo.Orders o ON o.CustomerID = c.CustomerID
-GROUP BY c.CustomerID;
+GROUP BY c.CustomerID
+ORDER BY [% all of Orders] DESC;
