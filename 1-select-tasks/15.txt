@@ -1,3 +1,49 @@
 Create a SQL query to return the total number of orders for every month in 1997 year:
 
 | January | February | March | April | May | June | July | August | September | November | December |
+
+
+--task15
+SELECT COUNT([o].[OrderID]) AS [January],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 2 AND YEAR([o].[OrderDate]) = 1997)
+AS [February],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 3 AND YEAR([o].[OrderDate]) = 1997)
+AS [March],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 4 AND YEAR([o].[OrderDate]) = 1997)
+AS [April],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 5 AND YEAR([o].[OrderDate]) = 1997)
+AS [May],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 6 AND YEAR([o].[OrderDate]) = 1997)
+AS [June],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 7 AND YEAR([o].[OrderDate]) = 1997)
+AS [July],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 8 AND YEAR([o].[OrderDate]) = 1997)
+AS [August],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 9 AND YEAR([o].[OrderDate]) = 1997)
+AS [September],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 10 AND YEAR([o].[OrderDate]) = 1997)
+AS [October],
+(SELECT COUNT([o].[OrderID]) 
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 12 AND YEAR([o].[OrderDate]) = 1997)
+AS [December]
+FROM [dbo].[Orders] [o] 
+WHERE MONTH([o].[OrderDate]) = 1 AND YEAR([o].[OrderDate]) = 1997
