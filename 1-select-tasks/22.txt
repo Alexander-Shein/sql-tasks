@@ -1,3 +1,14 @@
 Create a SQL query to display the name of each customer along with their most expensive purchased product:
 
 | CompanyName | ProductName | PricePerItem |
+
+  SELECT
+    [cc].[CompanyName],
+	(SELECT TOP(1) [p].[ProductName] FROM [dbo].[Products] [p] 
+	JOIN [dbo].[Order Details] [OD] ON [OD].[ProductID]=[p].[ProductID] 
+	JOIN [dbo].[Orders] [o]  ON [o].[OrderID]=[OD].[OrderID]
+	JOIN  [dbo].[Customers] [c] ON [c].[CustomerID]=[o].[CustomerID]
+	WHERE [p].[UnitPrice]=(SELECT MAX([OD].[UnitPrice]) FROM [dbo].[Orders] [o] JOIN [dbo].[Order Details] [OD] ON [OD].[OrderID]=[o].[OrderID] WHERE [o].[CustomerID]=[c].[CustomerID] ) AND [c].[CustomerID]=[cc].[CustomerID]) AS [ProductName],
+	(SELECT MAX([OD].[UnitPrice]) FROM [dbo].[Orders] [o] JOIN [dbo].[Order Details] [OD] ON [OD].[OrderID]=[o].[OrderID] WHERE [o].[CustomerID]=[cc].[CustomerID] ) AS [PricePerItem]
+  FROM
+	[dbo].[Customers] [cc]
