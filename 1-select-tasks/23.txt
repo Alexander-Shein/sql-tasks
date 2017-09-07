@@ -1,3 +1,6 @@
+--USE WHEN DB IS CREATED 
+--CREATE DATABASE [ComissionCalculator]
+
 USE [ComissionCalculator]
 
 CREATE TABLE [Formula] (
