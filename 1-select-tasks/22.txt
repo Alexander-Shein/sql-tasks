@@ -17,5 +17,4 @@ WHERE [cc].[CompanyName] = [c].[CompanyName]
 GROUP BY [cc].[CompanyName], [odd].[UnitPrice]
 ORDER BY [odd].[UnitPrice] DESC
 )
-GROUP BY [c].[CompanyName], [p].[ProductName], [od].[UnitPrice]
 ORDER BY [od].[UnitPrice] DESC;
