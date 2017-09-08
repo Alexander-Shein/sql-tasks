@@ -1,0 +1,16 @@
+1.
+
+SELECT EmployeeID as "Employee Id",CONCAT(FirstName, ' ', LastName) as "Employee Full Name" , Title as "Title", City as "City"
+FROM Employees
+ORDER BY City, "Employee Full Name";
+
+2.
+
+SELECT o.orderid, SUM(UnitPrice * Quantity) AS "OrderTotalPrice",100 * ROUND(CAST((SUM(od.Discount*od.UnitPrice*od.Quantity)/SUM(od.UnitPrice*od.Quantity)) as NUMERIC), 4) AS "Total Order Discount, %"
+FROM Orders o
+JOIN Order_Details od  ON o.OrderId = od.OrderId
+GROUP BY o.orderid;
+
+3.
+
+SELECT c.CustomerId as "CustomerId", c.CompanyName as "CompanyName" FROM Customers c WHERE c.Country = 'USA' AND c.Fax IS NULL;
