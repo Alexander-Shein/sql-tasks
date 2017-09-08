@@ -5,4 +5,4 @@
 
 SELECT [c].[CustomerID], [c].[CompanyName]
 FROM [dbo].[Customers] [c]
-WHERE [c].[Country] = 'USA' AND ([c].[Fax] IS NOT NULL)
+WHERE [c].[Country] = 'USA' AND ([c].[Fax] IS NULL)
