@@ -3,3 +3,11 @@ Create a SQL query to return next data ordered by city and then by name:
 | Employy Id | Employee Full Name | Title | City |
 
 [Employee Full Name] - First Name and Last Name.
+________________
+
+SELECT EmployeeID
+AS EmployyId, 
+FirstName || ' ' || LastName  
+AS "Employee Full Name", Title, City 
+FROM Northwind.public.Employees
+ORDER BY City, "Employee Full Name";
