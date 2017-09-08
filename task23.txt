@@ -118,7 +118,7 @@ Ts TIMESTAMP NOT NULL,
 	CONSTRAINT FK_FormulaVariable_FormulaVariableSet FOREIGN KEY (FormulaVariableSetId )
 	REFERENCES FormulaVariableSet(Id),
 	
-	INDEX IDX_FormulaVariable_FormulaId_FormulaVariableSetId_U_N (FormulaId, FormulaVariableSetId)
+	INDEX IDX_FormulaVariable_FormulaId_FormulaVariableSetId_U_N UNIQUE(FormulaId, FormulaVariableSetId)
 );
 
 
