@@ -1,11 +1,20 @@
-Create a SQL query to return next data ordered by city and then by name:
 
-| Employy Id | Employee Full Name | Title | City |
-
-[Employee Full Name] - First Name and Last Name.
-
-Maksim Sarvas "SELECT e.EmployeeID,
+Maksim Sarvas 
+Task 1 
+"SELECT e.EmployeeID,
 e.FIRSTNAME||' '||e.LASTNAME AS EmployeeFullName
 ,Title
 ,City  
 FROM Employees e;"
+
+Task 2
+'SELECT od.OrderID,
+SUM(od.Quantity*od.UnitPrice) as OrderTotalPrice, 
+(SUM(od.Discount*od.Quantity))/(SUM(od.Quantity*od.UnitPrice))*100 as TotalOrderDiscount 
+FROM order_details od
+ GROUP BY od.OrderID;
+'
+
+Task 3
+'SELECT c.CustomerID,c.CompanyName FROM Customers c
+WHERE c.Fax IS NULL;'
