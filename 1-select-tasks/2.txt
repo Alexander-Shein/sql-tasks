@@ -2,7 +2,7 @@ Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
 
-SELECT OrderID, UnitPrice*Quantity AS TotalPrice, Discount*100 AS Discount FROM [Order Details];
+SELECT OrderID, UnitPrice*Quantity AS TotalPrice, Discount*100 AS Discount FROM [Order Details] ORDER BY OrderID DESC;
 
 
 
