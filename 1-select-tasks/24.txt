@@ -1,0 +1,11 @@
+Create a SQL query to return next data ordered by city and then by name:
+
+| Employy Id | Employee Full Name | Title | City |
+
+[Employee Full Name] - First Name and Last Name.
+
+Maksim Sarvas "SELECT e.EmployeeID,
+e.FIRSTNAME||' '||e.LASTNAME AS EmployeeFullName
+,Title
+,City  
+FROM Employees e;"
