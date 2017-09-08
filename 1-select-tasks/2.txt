@@ -3,11 +3,11 @@ Create a query to return a list ordered by order id descending:
 | Order Id | Order Total Price | Total Order Discount, % |
 _________
 
-SELECT [o].[OrderID] AS [Order Id],
+USE [Northwind];
+
+SELECT [order].[OrderID] AS [Order Id],
 SUM([order].[UnitPrice] * [order].[Quantity]) AS [OrderTotalPrice],
 CAST((SUM([order].[UnitPrice] * [order].[Quantity] * [order].[Discount])) / (SUM([order].[UnitPrice] * [order].[Quantity])) * 100 AS NVARCHAR) + '%' AS [Total Order Discount, %] 
-FROM [Northwind].[dbo].[orders] [o]
-JOIN [Northwind].[dbo].[Order Details] [order]
-ON [o].[OrderID] = [order].[OrderID]
-GROUP BY [o].[OrderId]
-ORDER BY [o].[OrderID] DESC
+FROM [dbo].[Order Details] [order]
+GROUP BY [order].[OrderId]
+ORDER BY [order].[OrderID] DESC;
