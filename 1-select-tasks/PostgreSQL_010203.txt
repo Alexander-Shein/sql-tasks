@@ -1,0 +1,31 @@
+﻿++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Create a SQL query to return next data ordered by city and then by name:
+
+| Employy Id | Employee Full Name | Title | City |
+
+[Employee Full Name] - First Name and Last Name.
+
+SELECT b.EmployeeID AS "Employy Id", b.FirstName || b.LastName AS "Employee Full Name", b.Title, b.City 
+FROM Employees as b 
+ORDER BY City, b.FirstName;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Create a query to return a list ordered by order id descending:
+
+| Order Id | Order Total Price | Total Order Discount, % |
+
+
+  SELECT 
+	O.OrderID AS "Order Id", 
+	SUM(OD.Quantity*OD.UnitPrice) AS "Order Total Price",
+	SUM(OD.Quantity*OD.Discount)/SUM(OD.Quantity*OD.UnitPrice)*100.0 AS "Total Order Discount, %"
+  FROM Orders AS O 
+  JOIN Order_Details AS OD ON OD.OrderID=O.OrderID
+  GROUP BY O.OrderID;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Create a query to return all customers from USA without Fax:
+
+| CustomerId | CompanyName |
+
+ SELECT c.CustomerID AS "CustomerId", c.CompanyName FROM Customers AS c WHERE c.Fax IS NULL;
