@@ -1,0 +1,15 @@
+--task1
+select employeeid, concat(firstname,' ',lastname) as Employee_Full_Name, title, city from public.employees
+order by city,concat(firstname,' ',lastname)
+
+--task2
+select orderid as Order_ID,sum(unitprice*quantity) as Order_Total_Price, sum(discount) as  Total_Order_Discount 
+from public.order_details
+group by orderid
+order by orderid
+
+--task3
+select customerid as Customer_ID, companyname as Company_Name
+from public.customers
+where fax isnull
+
