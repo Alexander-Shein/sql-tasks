@@ -1,3 +1,5 @@
 Create a SQL query to return all orders where ship postal code is provided:
 
 | OrderId | CustomerId | ShipCountry |
+
+SELECT OrderID, CustomerID, ShipCountry, ShipPostalCode FROM Orders WHERE ShipPostalCode IS NOT NULL;
