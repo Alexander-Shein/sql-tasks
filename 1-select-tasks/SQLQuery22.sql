@@ -1,22 +1,32 @@
-SELECT [c].[CompanyName], [p].[ProductName], [t3].[UnitPrice] AS [PricePerItem] 
-FROM ( 
-	SELECT [t1].[CustomerID], [t1].[UnitPrice], [t2].[ProductID]
-	FROM ( 
-		SELECT [c].[CustomerID], MAX([od].[UnitPrice]) AS [UnitPrice] 
-		FROM [dbo].[Customers] [c]
-		JOIN [dbo].[Orders] [o] ON [c].[CustomerID] = [o].[CustomerID]
-		JOIN [dbo].[Order Details] [od] ON [o].[OrderID]  = [od].[OrderID]
-		GROUP BY [c].[CustomerID] 
-		) [t1]
-	JOIN ( 
-		SELECT [c].[CustomerID], [od].[ProductID], MAX([od].[UnitPrice]) AS [UnitPrice] 
-		FROM [dbo].[Customers] [c]
-		JOIN [dbo].[Orders] [o] ON [c].[CustomerID] = [o].[CustomerID]
-		JOIN [dbo].[Order Details] [od] ON [o].[OrderID]  = [od].[OrderID]
-		GROUP BY [c].[CustomerID], [od].[ProductID] 
-		) [t2] 
-	ON [t1].[CustomerID] = [t2].[CustomerID]
-	WHERE [t1].[UnitPrice] = [t2].[UnitPrice] 
-	) [t3]
-JOIN [dbo].[Products] [p] ON [t3].[ProductID] = [p].[ProductID]
-JOIN [dbo].[Customers] [c] ON [t3].[CustomerID] = [c].[CustomerID] 
+SELECT [c].[CustomerID], [od].[UnitPrice], [p].[ProductName]
+FROM [dbo].[Order Details] [od]
+JOIN [dbo].[Orders] [o] ON [od].[OrderID] = [o].[OrderID]
+JOIN [dbo].[Customers] [c] ON [o].[CustomerID] = [c].[CustomerID]
+JOIN [dbo].[Products] [p] ON [od].[ProductID] = [p].[ProductID]
+WHERE [od].[UnitPrice] = (
+	SELECT MAX( [odi].[UnitPrice]) 
+	FROM [dbo].[Order Details] [odi]
+	JOIN [dbo].[Orders] [oi] ON [odi].[OrderID] = [oi].[OrderID]
+	JOIN [dbo].[Customers] [ci] ON [oi].[CustomerID] = [c].[CustomerID]
+	)
+	ORDER BY [c].[CustomerID]
+
+SELECT [c].[CustomerID], [od].[UnitPrice], [p].[ProductName]
+FROM [dbo].[Order Details] [od]
+JOIN [dbo].[Orders] [o] ON [od].[OrderID] = [o].[OrderID]
+JOIN [dbo].[Customers] [c] ON [o].[CustomerID] = [c].[CustomerID]
+JOIN [dbo].[Products] [p] ON [od].[ProductID] = [p].[ProductID]
+WHERE [od].[UnitPrice] >= ALL (
+	SELECT [odi].[UnitPrice] 
+	FROM [dbo].[Order Details] [odi]
+	JOIN [dbo].[Orders] [oi] ON [odi].[OrderID] = [oi].[OrderID]
+	JOIN [dbo].[Customers] [ci] ON [oi].[CustomerID] = [c].[CustomerID]
+	)
+	ORDER BY [c].[CustomerID]
+
+
+
+
+
+
+
