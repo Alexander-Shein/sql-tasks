@@ -16,4 +16,4 @@ order by o.orderid desc
 --Task_3
 select c.customerid, c.companyname
 from customers c
-where c.country = 'USA' and (c.fax is not null)
+where c.country = 'USA' and (c.fax is null)
