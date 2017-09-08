@@ -1,3 +1,14 @@
 Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
+
+_____________
+
+SELECT o.OrderID AS "Order Id",
+SUM(odr.UnitPrice * odr.Quantity) AS OrderTotalPrice,
+CAST((SUM(odr.UnitPrice * odr.Quantity * odr.Discount)) / (SUM(odr.UnitPrice * odr.Quantity)) * 100 AS VARCHAR) || '%' AS "Total Order Discount, %" 
+FROM Northwind.public.orders AS o
+inner JOIN Northwind.public.order_details AS odr
+ON o.OrderID = odr.OrderID
+GROUP BY o.OrderId
+ORDER BY o.OrderID desc;
