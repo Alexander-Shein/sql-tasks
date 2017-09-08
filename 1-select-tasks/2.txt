@@ -2,7 +2,6 @@ Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
 
-SELECT [o].[OrderID], SUM([od].[UnitPrice] * [od].[Quantity]) AS 'OrderTotalPrice',100 * ROUND((SUM([od].[Discount]*[od].[UnitPrice]*[od].[Quantity])/SUM([od].[UnitPrice]*[od].[Quantity])), 4) AS 'Total Order Discount, %'
-FROM [Orders] [o]
-JOIN [Order Details] [od] ON [o].[OrderId] = [od].[OrderId]
-GROUP BY [o].[OrderID];
+SELECT [od].[OrderID], SUM([od].[UnitPrice] * [od].[Quantity]) AS 'OrderTotalPrice',100 * ROUND((SUM([od].[Discount]*[od].[UnitPrice]*[od].[Quantity])/SUM([od].[UnitPrice]*[od].[Quantity])), 4) AS 'Total Order Discount, %'
+FROM [Order Details] [od]
+GROUP BY [od].[OrderID];
