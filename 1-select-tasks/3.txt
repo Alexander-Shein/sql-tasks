@@ -1,3 +1,8 @@
-Create a query to return all customers from USA without Fax:
+--Create a query to return all customers from USA without Fax:
 
-| CustomerId | CompanyName |
+--| CustomerId | CompanyName |
+
+
+SELECT [c].[CustomerID], [c].[CompanyName]
+FROM [dbo].[Customers] [c]
+WHERE [c].[Country] = 'USA' AND ([c].[Fax] IS NULL)
