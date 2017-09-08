@@ -2,3 +2,7 @@ Return all products where product name starts with 'A', 'B', .... 'F' ordered by
 
 | ProductId | ProductName | QuantityPerUnit |
 
+MAKSIM SARVAS :'SELECT [P].[ProductID],[P].[ProductName],[P].[QuantityPerUnit] 
+FROM [dbo].[Products] [P]
+WHERE [P].[ProductName] LIKE '[A-F]%'
+ORDER BY [P].[ProductName];'

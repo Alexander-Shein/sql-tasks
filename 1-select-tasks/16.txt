@@ -1,3 +1,6 @@
 Create a SQL query to return all orders where ship postal code is provided:
 
 | OrderId | CustomerId | ShipCountry |
+
+Maksim Sarvas:'SELECT [O].[OrderID],[O].[CustomerID],[O].[ShipCountry] FROM [dbo].[Orders] [O]
+WHERE [O].[ShipPostalCode] IS NOT NULL;'
