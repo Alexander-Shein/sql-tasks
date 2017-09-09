@@ -2,19 +2,15 @@ Create a SQL query to display the name of each customer along with their most ex
 
 | CompanyName | ProductName | PricePerItem |
 
-SELECT [c].[CompanyName], [p].[ProductName], [od].[UnitPrice] AS 'PricePerItem'
+SELECT DISTINCT [c].[CompanyName], [p].[ProductName], [od].[UnitPrice] AS 'PricePerItem'
 FROM [Customers] [c]
 JOIN [Orders] [o] ON [o].[CustomerId] = [c].[CustomerId]
 JOIN [Order Details] [od] ON [o].[OrderId] = [od].[OrderId]
 JOIN [Products] [p] ON [od].[ProductId] = [p].[ProductId]
 WHERE [od].[UnitPrice] = (
-
-SELECT TOP 1 MAX([odd].[UnitPrice])
+SELECT MAX([odd].[UnitPrice])
 FROM [Customers] [cc]
 JOIN [Orders] [oo] ON [oo].[CustomerId] = [cc].[CustomerId]
 JOIN [Order Details] [odd] ON [oo].[OrderId] = [odd].[OrderId]
-WHERE [cc].[CompanyName] = [c].[CompanyName]
-GROUP BY [cc].[CompanyName], [odd].[UnitPrice]
-ORDER BY [odd].[UnitPrice] DESC
-)
-ORDER BY [od].[UnitPrice] DESC;
+WHERE [cc].[CustomerId] = [c].[CustomerId]
+);
