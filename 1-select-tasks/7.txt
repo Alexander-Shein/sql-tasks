@@ -6,6 +6,6 @@ Full Name - title of courtesy with full name.
 Order data by first column.
 Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
 
-SELECT [e].[EmployeeId], [e].[FirstName] + ' ' + [e].[LastName] AS 'FullName', ISNULL([eto].[FirstName] + ' ' + [eto].[LastName], '-') AS 'ReporstTo'
+SELECT [e].[EmployeeId], [e].[TitleOfCourtesy] + [e].[FirstName] + ' ' + [e].[LastName] AS 'FullName', ISNULL([eto].[FirstName] + ' ' + [eto].[LastName], '-') AS 'ReporstTo'
 FROM [dbo].[Employees] [e]
 LEFT JOIN [Employees] [eto] ON [e].[ReportsTo] = [eto].[EmployeeID];
