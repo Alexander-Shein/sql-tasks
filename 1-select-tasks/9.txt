@@ -2,6 +2,7 @@ Create a SQL query to find those customers whose contact name containing the 1st
 
 | CustomerId | ContactName |
 
+--task9
 SELECT [c].[CustomerID] AS [CustomerID], [c].[ContactName] AS [ContactName]
 FROM [dbo].[Customers] [c]
-WHERE [c].[ContactName] LIKE 'F%%n%';
+WHERE [c].[ContactName] LIKE 'F__n%';
