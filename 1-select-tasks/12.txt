@@ -4,8 +4,6 @@
 
 --Order products by price.
 
-
-SELECT TOP 20  [p].[ProductName], MAX([p].[UnitPrice]) as [UnitPrice]
+SELECT TOP 20  [p].[ProductName], [p].[UnitPrice] as [UnitPrice]
 FROM  [dbo].[Products] [p]
-GROUP BY [p].[ProductName]
 ORDER BY [UnitPrice] DESC
