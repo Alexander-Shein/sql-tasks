@@ -17,9 +17,9 @@ SELECT
     [12] AS 'December' FROM(
 SELECT MONTH([o].[OrderDate]) AS [Months], COUNT(*) AS 'OrdersSum'
 FROM [Orders] [o]
-WHERE [o].[OrderDate] LIKE '%1997%'
+WHERE YEAR([o].[OrderDate]) = '1997'
 GROUP BY MONTH([o].[OrderDate])) AS [s]
 PIVOT(
      SUM(OrdersSum)
      FOR [Months] IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
- ) AS [p]
+ ) AS [p];
