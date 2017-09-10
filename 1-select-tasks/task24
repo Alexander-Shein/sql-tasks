@@ -18,4 +18,4 @@ Task3 from SQL Server
 
 SELECT c.CustomerID, c.CompanyName
 FROM Customers c
-WHERE c.Country='USA' AND (c.Fax IS NOT NULL)
+WHERE c.Country='USA' AND (c.Fax IS NULL)
