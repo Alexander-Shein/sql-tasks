@@ -6,10 +6,10 @@ SELECT
 (
 	SELECT COUNT([p].[Discontinued])
 	FROM [dbo].[Products] [p] 
-	WHERE [p].[Discontinued] = 1
+	WHERE [p].[Discontinued] = 0
 ) AS [TotalOfCurrentProducts],
 (
 	SELECT COUNT([p].[Discontinued])
 	FROM [dbo].[Products][p]
-	WHERE [p].[Discontinued] = 0
+	WHERE [p].[Discontinued] = 1
 )  AS [TotalOfDiscontinuedProducts]
