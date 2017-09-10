@@ -1,0 +1,21 @@
+Task1 from SQL Server
+
+SELECT EmployeeId AS "Employee Id" , CONCAT(FirstName,' ', LastName) AS "Employee Full Name",Title, City
+FROM Employees
+ORDER BY City , "Employee Full Name"
+
+
+Task2 from SQL Server
+
+SELECT o.OrderID AS "Order Id", SUM(od.UnitPrice * od.Quantity) AS "Order Total Price",
+SUM((Discount)*100/(UnitPrice)) AS "Total Order Discount, %"
+FROM Orders o
+JOIN Order_Details od ON o.OrderID=od.OrderID
+GROUP BY o.OrderID
+ORDER BY o.OrderID DESC
+
+Task3 from SQL Server
+
+SELECT c.CustomerID, c.CompanyName
+FROM Customers c
+WHERE c.Country='USA' AND (c.Fax IS NULL)
