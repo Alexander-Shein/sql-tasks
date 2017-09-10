@@ -4,7 +4,8 @@ Create a query to return:
  
 order data by % - higher percent at the top.
 
-SELECT [c].[CustomerId] AS 'Customer Id', COUNT([o].[OrderId]) AS 'Total number of Orders',ROUND(100.0 * COUNT([o].[OrderId]) /  (SELECT COUNT([o].[OrderId]) FROM [Orders] [o]), 3) AS '% of all orders ' 
+SELECT [c].[CustomerId] AS 'Customer Id', COUNT([o].[OrderId]) AS 'Total number of Orders', ROUND(100.0 * COUNT([o].[OrderId]) /  (SELECT COUNT([o].[OrderId]) FROM [Orders] [o]), 3) AS '% of all orders' 
 FROM [Customers] [c], [Orders] [o] 
-WHERE [c].[CustomerId] = [o].[CustomerID]  
-GROUP BY [c].[CustomerID];
+WHERE [c].[CustomerId] = [o].[CustomerID]
+GROUP BY [c].[CustomerID]
+ORDER BY '% of all orders' DESC;
