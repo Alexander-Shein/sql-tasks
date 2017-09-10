@@ -1,3 +1,8 @@
 Create a SQL query to calcualte total orders count by each day in 1998:
 
 | Order Date | Total Number of Orders |
+USE northwind
+SELECT  o.OrderDate AS 'Order Date', COUNT(o.OrderID) AS 'Total Number of Orders'
+FROM Orders o
+WHERE YEAR(o.OrderDate)=1998
+GROUP BY o.OrderDate;
