@@ -3,9 +3,9 @@ Create a SQL query to display customer details whose total orders amount is more
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
 
 
-SELECT [c].[CustomerID] AS [CustomerID], SUM([Order Details].[UnitPrice]) AS [TotalOrdersAmount, $]
+SELECT [c].[CustomerID] AS [CustomerID], SUM([Order Details].[UnitPrice]*[Order Details].[Quantity]) AS [TotalOrdersAmount, $]
 FROM [dbo].[Customers] [c]
 JOIN [dbo].[Orders]  ON [c].[CustomerID] = [Orders].[CustomerID] 
 JOIN [dbo].[Order Details]  ON [Orders].[OrderID] = [Order Details].[OrderID]
 GROUP BY [c].[CustomerID]
-HAVING SUM([Order Details].[UnitPrice]) > 10000;
+HAVING SUM([Order Details].[UnitPrice]*[Order Details].[Quantity]) > 10000;
