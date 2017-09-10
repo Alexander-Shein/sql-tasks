@@ -6,10 +6,9 @@ order data by % - higher percent at the top.
 
 QUERY:
 
-SELECT [c].[CustomerID] AS [Customer Id], COUNT([o].[OrderID]) AS [Total number of orders], 
+SELECT [o].[CustomerID] AS [Customer Id], COUNT([o].[OrderID]) AS [Total number of orders], 
 CAST(COUNT([o].[OrderID]) AS DECIMAL(9,5))*100/SUM(COUNT([o].[CustomerID])) OVER()
 AS [% all of Orders]
-FROM [dbo].[Customers] [c]
-JOIN [dbo].[Orders] [o] ON [c].[CustomerId] = [o].[CustomerID]
-GROUP BY [c].[CustomerID]
+FROM [dbo].[Orders] [o]
+GROUP BY [o].[CustomerID]
 ORDER BY [% all of Orders] DESC;
