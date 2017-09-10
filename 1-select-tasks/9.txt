@@ -4,4 +4,4 @@ Create a SQL query to find those customers whose contact name containing the 1st
 
 SELECT [c].[CustomerID], [c].[ContactName]
 FROM [dbo].[Customers] [c]
-WHERE [c].[ContactName] LIKE 'f%__n%'
+WHERE [c].[ContactName] LIKE 'f__n%'
