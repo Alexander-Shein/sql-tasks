@@ -1,3 +1,11 @@
 Create a SQL query to return all orders where ship postal code is provided:
 
 | OrderId | CustomerId | ShipCountry |
+
+QUERY:
+
+SELECT [o].[OrderId], [o].[CustomerID], [o].[ShipCountry] 
+FROM [dbo].[Orders] [o]
+WHERE [o].[ShipRegion] <> 'RJ' OR [o].[ShipRegion] IS NULL;
+
+--It seems we can also use '!=' operator instead of '<>'
