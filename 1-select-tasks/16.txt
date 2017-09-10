@@ -6,4 +6,6 @@ QUERY:
 
 SELECT [o].[OrderId], [o].[CustomerID], [o].[ShipCountry] 
 FROM [dbo].[Orders] [o]
-WHERE [o].[ShipPostalCode] IS NOT NULL;
+WHERE [o].[ShipRegion] <> 'RJ';
+
+--It seems we can also use '!=' operator instead of '<>'
