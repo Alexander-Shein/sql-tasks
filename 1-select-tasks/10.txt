@@ -1,2 +1,5 @@
 Write a query to get discontinued Product list:
 | ProductId | Name | 
+
+SELECT ProductID, ProductName FROM Products
+ORDER BY ProductID DESC
