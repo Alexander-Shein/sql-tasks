@@ -1,3 +1,5 @@
 Create a query to return all customers from USA without Fax:
 
 | CustomerId | CompanyName |
+
+SELECT CustomerID, CompanyName FROM Northwind.dbo.Customers WHERE Country='USA' AND Fax IS NULL
