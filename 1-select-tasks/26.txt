@@ -1,0 +1,32 @@
+--LOST UPDATE
+
+CREATE table LostUpdate(
+Id INT primary key not null,
+Value INT not NULL
+);
+
+insert into LostUpdate values(1,1);
+
+--transaction 1
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+BEGIN;
+SELECT  pg_sleep(5);
+UPDATE LostUpdate
+SET Value = Value + 5
+WHERE Id = 1;
+
+SELECT Value
+FROM LostUpdate
+WHERE Id = 1;
+COMMIT;
+
+--transaction 2
+BEGIN;
+UPDATE LostUpdate 
+SET Value = Value + 7
+WHERE Id = 1;
+
+SELECT value 
+FROM LostUpdate
+WHERE Id = 1;
+COMMIT;
