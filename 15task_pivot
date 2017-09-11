@@ -1,0 +1,11 @@
+SELECT [1] AS [january],[2] AS [february], [3] AS [march],
+[4] AS [april], [5] AS [may], [6] AS [june], [7] AS [july], [8] AS [august] ,
+[9] AS [september], [10] AS [october], [11] AS [november], [12] AS [december]
+FROM (SELECT MONTH([o].[OrderDate]) AS [date_m], count([o].[OrderID]) AS [sum]
+FROM [dbo].[Orders][o]
+WHERE YEAR([o].[OrderDate])=1997
+GROUP by [o].[OrderDate]) AS [n]
+PIVOT
+(
+	sum(sum) FOR [date_m] IN ([1] ,[2] ,[3], [4], [5], [6], [7], [8] ,[9], [10], [11], [12])
+) AS PivotTable;
