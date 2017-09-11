@@ -7,7 +7,9 @@ create table TrainIsolLevels (
 );
 insert into TrainIsolLevels values (1, 1);
 
-SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+--(use REPEATABLE READ to fix)
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 begin;
 select testvalue as testvalue1 from TrainIsolLevels where id = 1;
 select pg_sleep(10);
