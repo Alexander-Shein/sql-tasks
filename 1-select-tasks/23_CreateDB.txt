@@ -82,7 +82,6 @@ CREATE TABLE [FormulaVariableParam](
 [ParamName] NVARCHAR(120) NOT NULL,
 [DefaultValue] NVARCHAR(4000) NOT NULL,
 [CanonicalDataType] TINYINT NOT NULL,
-[IsOverridenRuntime] BIT NOT NULL,
 [CreatedBy] INT NOT NULL,
 [ModifiedBy] INT NOT NULL,
 [DateCreated] DATETIME2(7) NOT NULL,
@@ -90,4 +89,6 @@ CREATE TABLE [FormulaVariableParam](
 [Ts] TIMESTAMP NOT NULL,
 CONSTRAINT [FK_FormulaVariableParam_FormulaVariableId_FormulaVariable_id] FOREIGN KEY ([FormulaVariableId]) REFERENCES [FormulaVariable] ([Id]),
 CONSTRAINT [PK_FormulaVariableParam_Id] PRIMARY KEY([Id]));
+
+ALTER TABLE FormulaVariableParam ADD [IsOverridenRuntime] BIT NOT NULL;
 
