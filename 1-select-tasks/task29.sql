@@ -1,0 +1,21 @@
+--Phantom reads problem
+START TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+
+SELECT * FROM bankaccount;
+
+SELECT PG_SLEEP(5);
+
+SELECT * FROM bankaccount;
+
+COMMIT;
+
+
+-----------------------------------
+
+START TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+
+INSERT INTO bankaccount
+VALUES(6, 2000);
+
+COMMIT;
