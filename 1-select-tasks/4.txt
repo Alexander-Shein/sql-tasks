@@ -6,10 +6,10 @@ order data by % - higher percent at the top.
 
 DECLARE @allOrders int
 SET @allOrders = (SELECT COUNT(*) FROM Orders o)
-SELECT c.CustomerID, COUNT(o.OrderID), 
+
+SELECT o.CustomerID AS CustomerId,
 SUM(o.OrderID)/COUNT(o.OrderID) AS [Total number of Orders],
 COUNT(o.OrderID)/(CAST(@allOrders AS DECIMAL))*100 AS [% all of Orders]
-FROM dbo.Customers c
-JOIN dbo.Orders o ON o.CustomerID = c.CustomerID
-GROUP BY c.CustomerID
+FROM dbo.Orders o
+GROUP BY o.CustomerID
 ORDER BY [% all of Orders] DESC;
