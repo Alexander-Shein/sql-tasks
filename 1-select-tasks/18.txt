@@ -3,4 +3,4 @@ Create a SQL query to calcualte total orders count by each day in 1998:
 | Order Date | Total Number of Orders |
 
 SELECT CAST(OrderDate AS DATE) AS [OrderDate], COUNT(*) FROM dbo.Orders WHERE YEAR(OrderDate)=
-'1998' GROUP BY [OrderDate];
+1998 GROUP BY [OrderDate];
