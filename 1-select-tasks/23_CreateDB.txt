@@ -76,4 +76,18 @@ CONSTRAINT [FK_FormulaVariable_FormulaVariableSet] FOREIGN KEY ([FormulaVariable
 CONSTRAINT [PK_FormulaVariable_Id] PRIMARY KEY([Id]),
 CONSTRAINT [IDX_FormulaVariable_FormulaId_FormulaVariableSetId_U_N] UNIQUE ([FormulaId],[FormulaVariableSetId]));
 
+CREATE TABLE [FormulaVariableParam](
+[Id] INT IDENTITY(1,1) NOT NULL,
+[FormulaVariableId] INT NOT NULL,
+[ParamName] NVARCHAR(120) NOT NULL,
+[DefaultValue] NVARCHAR(4000) NOT NULL,
+[CanonicalDataType] TINYINT NOT NULL,
+[IsOverridenRuntime] BIT NOT NULL,
+[CreatedBy] INT NOT NULL,
+[ModifiedBy] INT NOT NULL,
+[DateCreated] DATETIME2(7) NOT NULL,
+[DateModified] DATETIME2(7) NOT NULL,
+[Ts] TIMESTAMP NOT NULL,
+CONSTRAINT [FK_FormulaVariableParam_FormulaVariableId_FormulaVariable_id] FOREIGN KEY ([FormulaVariableId]) REFERENCES [FormulaVariable] ([Id]),
+CONSTRAINT [PK_FormulaVariableParam_Id] PRIMARY KEY([Id]));
 
