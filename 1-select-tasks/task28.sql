@@ -1,0 +1,25 @@
+--non-repeatable read
+START TRANSACTION ISOLATION LEVEL READ COMMITTED;
+--To solve problem we need to use repeatable read level
+
+SELECT * FROM BANKACCOUNT 
+WHERE ID = 1;
+
+SELECT PG_SLEEP(5);
+
+SELECT * FROM BANKACCOUNT 
+WHERE ID = 1;
+
+
+COMMIT;
+
+
+---------------------------------------------------
+
+START TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+UPDATE BANKACCOUNT 
+SET AMOUNT = 100
+WHERE ID = 1;
+
+COMMIT;
