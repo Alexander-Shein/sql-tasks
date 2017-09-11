@@ -1,0 +1,36 @@
+create table lostUpdate_table(
+id int not null,
+code int not null);
+----------------------------
+insert into public.lostUpdate_table
+(id, code)
+values(1, 203);
+
+select * from lostUpdate_table;
+
+
+--lost update
+
+set transaction isolation level read committed;
+begin transaction;
+select pg_sleep(10);
+update lostUpdate_table 
+set code = code + 100
+where id = 1;
+select code 
+from lostUpdate_table
+where id =1;
+commit;
+
+
+----------------------------
+
+
+begin transaction;
+update lostUpdate_table 
+set code = code + 10
+where id = 1;
+select code 
+from lostUpdate_table
+where id=1;
+commit;
