@@ -1,0 +1,17 @@
+Создать хранимую процедуру которая принимает OrderId возвращает Order и Order Details двумя разными селектами. (GetOrderById)
+___________
+
+--drop if exists
+--DROP PROCEDURE [dbo].[GetOrderById];
+
+CREATE PROCEDURE [dbo].[GetOrderById] @OrderID INT
+AS
+SELECT * FROM [dbo].[Orders] 
+WHERE [OrderID] = @OrderID;
+SELECT * FROM [dbo].[Order Details] 
+WHERE [OrderID] = @OrderID;
+
+
+-- run procedure(as example)
+
+EXEC [dbo].[GetOrderById] 10250
