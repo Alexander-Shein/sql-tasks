@@ -1,0 +1,22 @@
+-- drop table IF EXISTS TrainIsolLevels;
+-- create table TrainIsolLevels (
+-- 	Id INT primary key not null,
+-- 	TestValue INT not null
+-- );
+-- insert into TrainIsolLevels values (1, 1);
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+begin;
+update TrainIsolLevels set testValue = testValue + 5;
+select pg_sleep(5);
+commit;
+
+select * from TrainIsolLevels;
+
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+begin;
+update TrainIsolLevels set testValue = testValue + 5;
+commit;
+
+select * from TrainIsolLevels;
