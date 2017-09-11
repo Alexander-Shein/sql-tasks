@@ -1,0 +1,30 @@
+--http://bajis-postgres.blogspot.com.by/2013/12/types-of-read-and-levels-of-transaction.html
+--"In PostgreSQL dirty reads are not possible and non-repeatable and phantom reads can, in fact, happen."
+--or look
+--https://postgrespro.ru/docs/postgrespro/9.5/transaction-iso.html
+--table 13-1
+
+--Can't emulate "Dirty read" in PostgreSQL
+
+drop table IF EXISTS TrainIsolLevels;
+create table TrainIsolLevels (
+  Id INT primary key not null,
+  TestValue INT not null
+);
+insert into TrainIsolLevels values (1, 1);
+
+
+BEGIN;
+	UPDATE TrainIsolLevels 
+	SET TestValue = TestValue * 10
+	WHERE ID = 1; 
+	SELECT PG_SLEEP(5);
+ROLLBACK;
+
+
+--RUN ASYNK
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; 
+BEGIN;
+SELECT * FROM TrainIsolLevels;
+COMMIT;
