@@ -4,16 +4,13 @@ Create a SQL query to display the name of each customer along with their most ex
 
 QUERY:
 
-SELECT [c].[CompanyName], [t3].[ProductName], [t3].[PricePerItem] 
-FROM [dbo].[Customers][c] JOIN (SELECT [t1].[CustomerID],[t2].[ProductName],[t1].[T1Price] AS [PricePerItem] 
-FROM (SELECT [c].[CustomerID], MAX([od].[UnitPrice]) AS [T1Price]
-			FROM [dbo].[Customers][c] JOIN [dbo].[Orders][o] ON [c].[CustomerID] = [o].[CustomerID]
-									JOIN [dbo].[Order Details][od] ON [o].[OrderID] = [od].[OrderID]
-									GROUP BY [c].[CustomerID])[t1]
-	JOIN (SELECT [o].[CustomerID], [p].[ProductName], MAX([od].[UnitPrice]) AS [T2Price] FROM 
-		[dbo].[Orders][o] JOIN [dbo].[Order Details][od] ON [o].[OrderID] = [od].[OrderID]
-		JOIN [dbo].[Products][p] ON [od].[ProductID]=[p].[ProductID]
-		GROUP BY [o].[CustomerID],[p].[ProductName])[t2]
-		ON [t1].[CustomerID]=[t2].[CustomerID]
-		WHERE [t1].[T1Price]=[t2].[T2Price])[t3]
-		ON [c].[CustomerID] = [t3].[CustomerID];
+SELECT DISTINCT [cus].[CompanyName], [prod].[ProductName], [prod].[UnitPrice] AS [PricePerItem]
+FROM [dbo].[Customers] [cus] 
+JOIN [dbo].[Orders] [or] ON [cus].[CustomerId] = [or].[CustomerId]
+JOIN [dbo].[Order Details] [od] ON [or].[OrderID] = [od].[OrderId]
+JOIN [dbo].[Products] [prod] ON [od].[ProductID] = [prod].[ProductID]
+WHERE [prod].[UnitPrice] = (
+SELECT MAX([od2].[UnitPrice])
+FROM [dbo].[Order Details] [od2]
+JOIN [dbo].[Orders] [or2] ON [od2].[OrderID] = [or2].[OrderID]
+WHERE [or2].[CustomerID] = [cus].[CustomerID]);
