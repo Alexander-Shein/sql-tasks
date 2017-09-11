@@ -1,0 +1,31 @@
+--REPEATABLE READ
+
+
+CREATE table RepeatableRead(
+Id INT primary key not null,
+Value INT not NULL
+);
+insert into RepeatableRead values(1,1);
+
+
+--transaction 1
+
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+BEGIN;
+SELECT Value
+FROM RepeatableRead
+WHERE Id = 1;
+SELECT pg_sleep(5);
+SELECT Value
+FROM RepeatableRead
+WHERE Id = 1;
+COMMIT;
+
+--transaction 2
+
+BEGIN;
+UPDATE RepeatableRead
+SET Value = 42
+WHERE Id = 1;
+COMMIT;
+
