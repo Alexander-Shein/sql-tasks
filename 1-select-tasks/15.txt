@@ -4,46 +4,18 @@ Create a SQL query to return the total number of orders for every month in 1997 
 
 
 --task15
-SELECT COUNT([o].[OrderID]) AS [January],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 2 AND YEAR([o].[OrderDate]) = 1997)
-AS [February],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 3 AND YEAR([o].[OrderDate]) = 1997)
-AS [March],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 4 AND YEAR([o].[OrderDate]) = 1997)
-AS [April],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 5 AND YEAR([o].[OrderDate]) = 1997)
-AS [May],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 6 AND YEAR([o].[OrderDate]) = 1997)
-AS [June],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 7 AND YEAR([o].[OrderDate]) = 1997)
-AS [July],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 8 AND YEAR([o].[OrderDate]) = 1997)
-AS [August],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 9 AND YEAR([o].[OrderDate]) = 1997)
-AS [September],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 10 AND YEAR([o].[OrderDate]) = 1997)
-AS [October],
-(SELECT COUNT([o].[OrderID]) 
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 12 AND YEAR([o].[OrderDate]) = 1997)
-AS [December]
-FROM [dbo].[Orders] [o] 
-WHERE MONTH([o].[OrderDate]) = 1 AND YEAR([o].[OrderDate]) = 1997
+SELECT 
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 1 THEN 1 ELSE NULL END) AS [january],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 2 THEN 1 ELSE NULL END) AS [february],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 3 THEN 1 ELSE NULL END) AS [march],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 4 THEN 1 ELSE NULL END) AS [april],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 5 THEN 1 ELSE NULL END) AS [may],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 6 THEN 1 ELSE NULL END) AS [june],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 7 THEN 1 ELSE NULL END) AS [july],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 8 THEN 1 ELSE NULL END) AS [august],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 9 THEN 1 ELSE NULL END) AS [september],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 10 THEN 1 ELSE NULL END) AS [october],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 11 THEN 1 ELSE NULL END) AS [november],
+    SUM(CASE WHEN MONTH([o].[OrderDate]) = 12 THEN 1 ELSE NULL END) AS [december]
+FROM [dbo].[Orders] [o]
+WHERE YEAR([o].[OrderDate]) = 1997
