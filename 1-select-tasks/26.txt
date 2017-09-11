@@ -1,0 +1,4 @@
+
+
+PostgresSql  is "dirty read" protected by default 
+https://postgrespro.ru/docs/postgrespro/9.5/transaction-iso
