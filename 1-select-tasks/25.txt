@@ -1,5 +1,8 @@
 --http://bajis-postgres.blogspot.com.by/2013/12/types-of-read-and-levels-of-transaction.html
 --"In PostgreSQL dirty reads are not possible and non-repeatable and phantom reads can, in fact, happen."
+--or look
+--https://postgrespro.ru/docs/postgrespro/9.5/transaction-iso.html
+--table 13-1
 
 --Can't emulate "Dirty read" in PostgreSQL
 
