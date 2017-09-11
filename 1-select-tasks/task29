@@ -1,0 +1,11 @@
+a) Создать хранимую процедуру которая принимает OrderId возвращает Order и Order Details двумя разными селектами. (GetOrderById)
+
+CREATE PROCEDURE GetOrderById
+@OrderId INT
+AS
+SELECT *
+FROM [Orders] [o]
+WHERE [o].[OrderId] = @OrderId
+SELECT *
+FROM [Order Details] [od]
+WHERE [od].[OrderId] = @OrderId;
