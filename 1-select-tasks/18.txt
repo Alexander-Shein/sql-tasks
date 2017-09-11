@@ -4,20 +4,7 @@ Create a SQL query to calcualte total orders count by each day in 1998:
 
 
 
-CREATE OR ALTER FUNCTION [dbo].DateList(@from DATE, @till DATE)
-RETURNS @list TABLE (dt DATE)
-BEGIN
-	WHILE @from <= @till BEGIN
-		INSERT @list(dt) VALUES(@from)
-		SET @from = DATEADD(day, 1, @from)
-	END
-	RETURN
-END
-GO
-
-SELECT CONVERT(VARCHAR, dt, 103) AS 'Order Date',(
-SELECT COUNT([o].[OrderId]) AS 'Total Number of Orders'
+SELECT CONVERT(VARCHAR, [o].[Orderdate], 103) AS 'Order Date',  COUNT([o].[OrderId]) AS 'Total Number of Orders'
 FROM [Orders] [o]
-WHERE YEAR([o].[OrderDate]) = '1998' AND MONTH([o].[OrderDate]) = MONTH(dt) AND DAY([o].[OrderDate]) = DAY(dt)
-) AS 'Total Number of Orders' FROM [dbo].DateList('19980101', '19981231')
-ORDER BY dt;
+WHERE YEAR([o].[OrderDate]) = 1998
+GROUP BY [o].[Orderdate];
