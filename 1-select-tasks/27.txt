@@ -7,9 +7,9 @@ insert into TrainIsolLevels values (1, 1);
 
 SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
 begin;
-select * from TrainIsolLevels;
-select pg_sleep(5);
-select * from TrainIsolLevels;
+select testvalue as testvalue1 from TrainIsolLevels where id = 1;
+select pg_sleep(10);
+select testvalue from TrainIsolLevels where id = 1;
 commit;
 
 
