@@ -2,10 +2,10 @@ Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
 
+
   SELECT 
-	[O].[OrderID] AS [Order Id], 
+	[OD].[OrderID] AS [Order Id], 
 	SUM([OD].[Quantity]*[OD].[UnitPrice]) AS [Order Total Price],
 	SUM([OD].[Quantity]*[OD].[Discount])/SUM([OD].[Quantity]*[OD].[UnitPrice])*100.0 AS [Total Order Discount, %]
-  FROM [dbo].[Orders] [O] 
-  JOIN [dbo].[Order Details] [OD] ON [OD].[OrderID]=[O].[OrderID]
-  GROUP BY [O].[OrderID]
+  FROM [dbo].[Order Details] [OD] 
+  GROUP BY [OD].[OrderID]
