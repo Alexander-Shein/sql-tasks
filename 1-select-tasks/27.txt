@@ -1,4 +1,4 @@
-non-repeatable read
+--non-repeatable read
 
 drop table IF EXISTS TrainIsolLevels;
 create table TrainIsolLevels (
