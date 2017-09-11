@@ -3,26 +3,11 @@ Create a SQL query to display the name of each customer along with their most ex
 | CompanyName | ProductName | PricePerItem |
 ___________________
 
-I now that it's bad sql but at the moment a haven't another decision
-
-SELECT DISTINCT [cst].[CompanyName], [prt].[ProductName], ([odsDet].[UnitPrice] * [odsDet].[Quantity]) - ([odsDet].[UnitPrice] * [odsDet].[Quantity] * [odsDet].[Discount]) AS [UnitPrice]
-FROM [Northwind].[dbo].[Customers] [cst]
-JOIN [Northwind].[dbo].[Orders] [ods]
-ON [cst].[CustomerID] = [ods].[CustomerID]
-JOIN [Northwind].[dbo].[Order Details] [odsDet]
-ON [odsDet].[OrderID] = [ods].[OrderID]
-JOIN [Northwind].[dbo].[Products] [prt]
-ON [prt].[ProductID] = [odsDet].[ProductID]
-WHERE EXISTS(
-	SELECT ''
-	FROM [Northwind].[dbo].[Customers] [cstt]
-	JOIN [Northwind].[dbo].[Orders] [odss]
-	ON [cstt].[CustomerID] = [odss].[CustomerID]
-	JOIN [Northwind].[dbo].[Order Details] [odsDett]
-	ON [odsDett].[OrderID] = [odss].[OrderID]
-	JOIN [Northwind].[dbo].[Products] [prtt]
-	ON [prtt].[ProductID] = [odsDett].[ProductID]
-	GROUP BY [cstt].[CompanyName]
-	HAVING [cst].[CompanyName] = [cstt].[CompanyName] AND MAX(([odsDett].[UnitPrice] * [odsDett].[Quantity]) - ([odsDett].[UnitPrice] * [odsDett].[Quantity] * [odsDett].[Discount])) = (([odsDet].[UnitPrice] * [odsDet].[Quantity]) - ([odsDet].[UnitPrice] * [odsDet].[Quantity] * [odsDet].[Discount]))
-)
-ORDER BY [cst].[CompanyName]
+SELECT DISTINCT [c].[CompanyName], [p].[ProductName], [p].[UnitPrice]  AS [PricePerItem]
+FROM [dbo].[Customers][c]
+JOIN [dbo].[Orders][o] ON [o].[CustomerID] = [c].[CustomerID]
+JOIN [dbo].[Order Details][od] ON [od].[OrderID] = [o].[OrderID]
+JOIN [dbo].[Products][p] ON [p].[ProductID] = [od].[ProductID]
+WHERE [p].[UnitPrice] = (SELECT MAX([od2].[UnitPrice]) FROM [dbo].[Order Details][od2]
+		JOIN [dbo].[Orders] [o2] ON [o2].[OrderID] = [od2].[OrderID]
+		WHERE [o2].[CustomerID] = [c].[CustomerID])
