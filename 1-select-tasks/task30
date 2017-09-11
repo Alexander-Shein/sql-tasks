@@ -1,0 +1,21 @@
+USE NORTHWIND;
+--task а) Создать хранимую процедуру которая принимает OrderId возвращает Order и Order Details двумя разными селектами. (GetOrderById)
+DROP PROCEDURE GetOrderById;
+
+CREATE PROCEDURE GetOrderById
+ @Id INTEGER
+ AS
+ SELECT * FROM Orders WHERE OrderID = @Id
+ SELECT * FROM [Order Details] WHERE OrderID = @Id;
+
+BEGIN TRY
+    BEGIN TRAN
+    EXECUTE GetOrderById 10265
+COMMIT TRAN
+END TRY
+
+BEGIN CATCH
+
+		ROLLBACK TRAN
+
+END CATCH;
