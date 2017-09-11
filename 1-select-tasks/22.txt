@@ -2,13 +2,12 @@
 
 --| CompanyName | ProductName | PricePerItem |
 
-SELECT [c].[CustomerID], [c].[CompanyName], [p].[ProductName], [od].[UnitPrice]  AS [PricePerItem]
+SELECT DISTINCT [c].[CompanyName], [p].[ProductName], [p].[UnitPrice]  AS [PricePerItem]
 FROM [dbo].[Customers][c]
 JOIN [dbo].[Orders][o] ON [o].[CustomerID] = [c].[CustomerID]
 JOIN [dbo].[Order Details][od] ON [od].[OrderID] = [o].[OrderID]
 JOIN [dbo].[Products][p] ON [p].[ProductID] = [od].[ProductID]
-WHERE [od].[UnitPrice] = 
-			(SELECT MAX([od2].[UnitPrice]) FROM [dbo].[Orders][o2]
-			JOIN [dbo].[Order Details] [od2] ON [od2].[OrderID] = [o2].[OrderID]
-			WHERE [o2].[CustomerID] = [c].[CustomerID])
-ORDER BY [c].[CustomerID]
+WHERE [p].[UnitPrice] = (SELECT MAX([od2].[UnitPrice]) FROM [dbo].[Order Details][od2]
+		JOIN [dbo].[Orders] [o2] ON [o2].[OrderID] = [od2].[OrderID]
+		JOIN [dbo].[Products][p2] ON [p2].[ProductID] = [od2].[ProductID]
+		WHERE [o2].[CustomerID] = [c].[CustomerID])
