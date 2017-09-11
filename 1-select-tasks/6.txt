@@ -1,3 +1,5 @@
 Create a query to return all products with category and supplier company names:
 
 | ProductName | CategoryName | SupplierCompanyName |
+
+SELECT [p].[ProductName], [c].[CategoryName], [s].[CompanyName] AS 'SupplierCompanyName'  FROM [Products] [p], [Suppliers] [s], [Categories] [c] WHERE [p].[CategoryID] = [c].[CategoryID] AND [p].[SupplierID] = [s].[SupplierID];
