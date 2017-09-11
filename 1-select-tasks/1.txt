@@ -3,3 +3,6 @@ Create a SQL query to return next data ordered by city and then by name:
 | Employy Id | Employee Full Name | Title | City |
 
 [Employee Full Name] - First Name and Last Name.
+
+
+SELECT [e].[EmployeeID] AS 'Employee Id', ([e].[FirstName] +' '+ [e].[lastName]) AS 'Employee Full Name' , [e].[Title], [e].[City] FROM [Employees] [e] ORDER BY [e].[City], 'Employee Full Name';

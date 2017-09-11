@@ -1,2 +1,4 @@
 Write a query to get discontinued Product list:
-| ProductId | Name | 
+| ProductId | Name |
+
+SELECT [p].[ProductId], [p].[ProductName] FROM [Products] [p] WHERE [p].[Discontinued] = 1;

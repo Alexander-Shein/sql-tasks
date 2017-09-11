@@ -1,3 +1,10 @@
 Write a SQL statement to get the maximum purchase amount of all the orders.
 
 | Order Id | Maximum Purchase Amount, $ |
+
+SELECT TOP (1) [o].[OrderId],
+SUM([od].[UnitPrice] * [od].[Quantity]) AS 'Maximum Purchase Amount, $'
+FROM [Orders] [o]
+JOIN [Order Details] [od] ON [od].[OrderId] = [o].[OrderId]
+GROUP BY [o].[OrderId]
+ORDER BY SUM([od].[UnitPrice] * [od].[Quantity]) DESC;
