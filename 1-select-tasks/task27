@@ -1,0 +1,30 @@
+--lost update problem
+
+DROP TABLE IF EXISTS TranIsolLevels;
+CREATE TABLE TranIsolLevels (
+Id INTEGER PRIMARY KEY NOT NULL,
+TestValue INTEGER NOT NULL
+);
+
+INSERT INTO TranIsolLevels VALUES(1,1);
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+BEGIN;
+UPDATE TranIsolLevels
+SET TestValue=TestValue+5
+WHERE Id=1;
+SELECT pg_sleep(5);
+SELECT  Id,TestValue
+FROM TranIsolLevels;
+COMMIT;
+
+
+BEGIN;
+UPDATE TranIsolLevels
+SET TestValue=TestValue+7
+WHERE Id=1;
+SELECT Testvalue
+FROM TranIsolLevels
+WHERE Id=1;
+COMMIT;
