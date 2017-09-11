@@ -3,6 +3,8 @@ Create a SQL query to display the name of each customer along with their most ex
 | CompanyName | ProductName | PricePerItem |
 ___________________
 
+improve (i hope) another desigion - remove reduce join 
+
 SELECT DISTINCT [c].[CompanyName], [p].[ProductName], [p].[UnitPrice]  AS [PricePerItem]
 FROM [dbo].[Customers][c]
 JOIN [dbo].[Orders][o] ON [o].[CustomerID] = [c].[CustomerID]
