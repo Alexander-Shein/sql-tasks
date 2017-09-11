@@ -1,3 +1,10 @@
 Create a SQL query to calcualte total orders count by each day in 1998:
 
 | Order Date | Total Number of Orders |
+
+
+
+SELECT CONVERT(VARCHAR, [o].[Orderdate], 103) AS 'Order Date',  COUNT([o].[OrderId]) AS 'Total Number of Orders'
+FROM [Orders] [o]
+WHERE YEAR([o].[OrderDate]) = 1998
+GROUP BY [o].[Orderdate];
