@@ -1,0 +1,24 @@
+--phantom read
+
+drop table IF EXISTS TrainIsolLevels;
+create table TrainIsolLevels (
+	Id INT not null,
+	TestValue INT not null
+);
+insert into TrainIsolLevels values (1, 1);
+
+--use SERIALIZABLE to fix
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+begin;
+SELECT SUM(testvalue) FROM TrainIsolLevels WHERE testvalue >= 1;
+select pg_sleep(5);
+SELECT sum(testvalue) FROM TrainIsolLevels WHERE testvalue >= 1;
+commit;
+
+
+--run asynk
+
+begin;
+insert into TrainIsolLevels (id, testvalue) values (2, 100);
+commit;
