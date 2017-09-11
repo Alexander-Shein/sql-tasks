@@ -7,10 +7,20 @@ _____________
 
 CREATE PROCEDURE [dbo].[DeleteOrderById] @OrderID INT
 AS
-DELETE FROM [dbo].[Order Details]
-WHERE [OrderID] = @OrderID;
-DELETE FROM [dbo].[Orders] 
-WHERE [OrderID] = @OrderID;
+BEGIN TRAN;
+BEGIN TRY
+	DELETE FROM [dbo].[Order Details]
+	WHERE [OrderID] = @OrderID;
+	DELETE FROM [dbo].[Orders] 
+	WHERE [OrderID] = @OrderID;
+	SELECT [OrderID] FROM [dbo].[Order Details];
+	COMMIT TRAN;
+END TRY
+BEGIN CATCH
+	SELECT * FROM [dbo].[Order Details];
+	ROLLBACK TRAN;
+END CATCH;
+
 
 
 -- run procedure(as example)
