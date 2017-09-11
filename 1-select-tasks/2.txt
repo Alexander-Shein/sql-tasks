@@ -1,3 +1,12 @@
 Create a query to return a list ordered by order id descending:
 
 | Order Id | Order Total Price | Total Order Discount, % |
+
+DECLARE @allOrders int
+SET @allOrders = (SELECT COUNT(*) FROM [dbo].[Orders] [o])
+
+SELECT [o].[CustomerID] AS [Customer Id], COUNT([o].[OrderID]) AS [Total number of orders],
+COUNT([o].[OrderID])/(CAST(@allOrders AS DECIMAL)) * 100 AS [% all of Orders]
+FROM [dbo].[Orders] [o]
+GROUP BY [o].[CustomerID]
+ORDER BY [% all of Orders] DESC;
