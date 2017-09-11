@@ -1,3 +1,5 @@
+non-repeatable read
+
 drop table IF EXISTS TrainIsolLevels;
 create table TrainIsolLevels (
 	Id INT primary key not null,
