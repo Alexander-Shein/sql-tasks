@@ -6,8 +6,12 @@ GO
 CREATE PROCEDURE GetOrderById 
 @Id INTEGER
 AS
-		SELECT*FROM [dbo].[Orders] WHERE [OrderID] = @Id
-		SELECT*FROM [dbo].[Order Details] WHERE [OrderID] = @Id
-GO
-
-EXECUTE GetOrderById 10251
+	SELECT [o].[OrderID], [o].[CustomerID],[o].[EmployeeID],[o].[OrderDate],
+	[o].[RequiredDate], [o].[ShippedDate],[o].[ShipVia],[o].[Freight],[o].[ShipName],
+	[o].[ShipAddress],[o].[ShipAddress],[o].[ShipRegion],[o].[ShipPostalCode],[o].[ShipCountry]
+	FROM [dbo].[Orders][o] WHERE [o].[OrderID] = @Id
+	SELECT [od].[OrderID],[od].[ProductID],[od].[UnitPrice],[od].[Quantity],[od].[Discount]
+	FROM [dbo].[Order Details][od] WHERE [od].[OrderID] = @Id
+ GO
+ 
+ EXECUTE GetOrderById 10251
