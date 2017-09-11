@@ -1,0 +1,27 @@
+-can't emulate lost update on posrgreSQL with all levels.
+
+drop table IF EXISTS TrainIsolLevels;
+create table TrainIsolLevels (
+	Id INT primary key not null,
+	TestValue INT not null
+);
+insert into TrainIsolLevels values (1, 1);
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+begin;
+update TrainIsolLevels set testValue = testValue + 8;
+select pg_sleep(5);
+commit;
+
+select * from TrainIsolLevels;
+
+
+--run asynk
+
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
+begin;
+update TrainIsolLevels set testValue = testValue + 9;
+commit;
+
+select * from TrainIsolLevels;
+
