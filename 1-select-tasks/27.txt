@@ -1,0 +1,24 @@
+--non-repeatable read
+
+drop table IF EXISTS TrainIsolLevels;
+create table TrainIsolLevels (
+	Id INT primary key not null,
+	TestValue INT not null
+);
+insert into TrainIsolLevels values (1, 1);
+
+--(use REPEATABLE READ to fix)
+
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+begin;
+select testvalue as testvalue1 from TrainIsolLevels where id = 1;
+select pg_sleep(10);
+select testvalue from TrainIsolLevels where id = 1;
+commit;
+
+
+--MUST BE STARTED ASYNK
+
+begin;
+update TrainIsolLevels set testvalue = 143 where id = 1;
+commit;
