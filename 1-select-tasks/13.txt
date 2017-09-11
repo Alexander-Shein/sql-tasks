@@ -1,3 +1,9 @@
 Create a SQL query to count current and discontinued products:
 
 | TotalOfCurrentProducts | TotalOfDiscontinuedProducts |
+______________
+
+SELECT SUM(CASE [p].[Discontinued] WHEN 0 THEN 1 END) AS [TotalOfDiscontinuedProducts],
+SUM(CASE [p].[Discontinued] WHEN 1 THEN 1 END) AS [TotalOfCurrentProducts]
+FROM [dbo].[Products] [p]
+
