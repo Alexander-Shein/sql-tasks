@@ -3,13 +3,7 @@ Create a SQL query to count current and discontinued products:
 | TotalOfCurrentProducts | TotalOfDiscontinuedProducts |
 ______________
 
-DECLARE @currentProducts int
-SET @currentProducts = (
-	SELECT COUNT(*) AS [TotalOfCurrentProducts]
-	FROM [Northwind].[dbo].[Products] [p]
-	WHERE [p].[Discontinued] = 0
-)
+SELECT SUM(CASE [p].[Discontinued] WHEN 0 THEN 1 END) AS [TotalOfDiscontinuedProducts],
+SUM(CASE [p].[Discontinued] WHEN 1 THEN 1 END) AS [TotalOfCurrentProducts]
+FROM [dbo].[Products] [p]
 
-SELECT @currentProducts AS [TotalOfCurrentProducts], COUNT(*) AS [TotalOfDiscontinuedProducts]
-FROM [Northwind].[dbo].[Products] [p]
-WHERE [p].[Discontinued] = 1
