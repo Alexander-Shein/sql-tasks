@@ -1,0 +1,22 @@
+б) Создать хранимую процедуру которая принимает OrderID удаляет Order и Order Details по этому ID. (DeleteOrderById)
+
+CREATE PROCEDURE DeleteOrderById
+@OrderId INTEGER
+AS
+BEGIN TRAN;
+BEGIN try
+DELETE
+FROM [Order details]
+WHERE [OrderId] = @OrderId
+DELETE
+FROM [Orders]
+WHERE [OrderId] = @OrderId;
+COMMIT TRAN;
+END try
+BEGIN catch
+SELECT *
+FROM [Orders] [o]
+JOIN [Order Details] [od] ON [o].[OrderId] = [od].[OrderId]
+WHERE [o].[OrderId] = @OrderId;
+ROLLBACK TRAN;
+END catch;
