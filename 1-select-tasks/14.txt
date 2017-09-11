@@ -2,5 +2,5 @@ Create a SQL query to get Product list of stock is less than the quantity on ord
 
 | ProductName | UnitsInOrder| UnitsInStock |
 
-SELECT ProductName, UnitsOnOrder AS UnitsInOrder, UnitsInStock
-FROM PRODUCTS WHERE UnitsOnOrder > UnitsInStock;
+SELECT productname, unitsonorder AS unitsinorder, unitsinstock
+FROM dbo.products WHERE unitsonorder > unitsinstock;
