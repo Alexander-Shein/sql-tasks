@@ -3,18 +3,14 @@ Create a query to return a list ordered by order id descending:
 | Order Id | Order Total Price | Total Order Discount, % |
 
 SELECT
-	o.orderid,
-	SUM( od.unitprice*od.quantity ) AS totalprice,
+	orderid,
+	SUM( unitprice*quantity ) AS totalprice,
 	(
-		SUM( od.unitprice*od.quantity + od.unitprice + od.quantity*od.discount )- SUM( od.unitprice*od.quantity )
-	)/ SUM( od.unitprice*od.quantity + od.unitprice + od.quantity*od.discount ) AS total_order_discount,
+		SUM( unitprice*quantity + unitprice + quantity*discount )- SUM( unitprice*quantity )
+	)/ SUM( unitprice*quantity + unitprice + quantity*discount ) AS total_order_discount
 FROM
-	orders o
-JOIN order_details od ON
-	o.orderid = od.orderid
+	order_details
 GROUP BY
-	o.orderid
+	orderid
 ORDER BY
 	orderid DESC;
-
-
