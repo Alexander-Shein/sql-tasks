@@ -3,3 +3,18 @@ Write a SQL query to get Product list of twenty most expensive products:
 | ProductName | UnitPrice |
 
 Order products by price.
+__________
+
+CHANGED WITHOUT ANY (2)
+
+SELECT TOP(20) [p].[ProductName], [p].[UnitPrice] 
+FROM [dbo].[Products] [p] 
+ORDER BY [UnitPrice] DESC
+
+
+PREVIOUS VARIANT (1)
+
+SELECT [p].[ProductName], [p].[UnitPrice] 
+FROM [Northwind].[dbo].[Products] [p] 
+WHERE [p].[UnitPrice] = ANY(SELECT TOP(20) [p].[UnitPrice] FROM [Northwind].[dbo].[Products] [p] ORDER BY [UnitPrice] DESC)
+ORDER BY [UnitPrice]
