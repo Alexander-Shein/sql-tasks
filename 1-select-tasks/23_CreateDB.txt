@@ -54,3 +54,26 @@ CREATE TABLE [FormulaVariableSet](
 [Ts] TIMESTAMP NOT NULL,
 CONSTRAINT [PK_FormulaVariableSet_Id] PRIMARY KEY([Id]),
 CONSTRAINT [IDX_FormulaVariableSet_Code_U_N] UNIQUE ([Code]));
+
+CREATE TABLE [FormulaVariable](
+[Id] INT IDENTITY(1,1) NOT NULL,
+[FormulaId] INT NOT NULL,
+[FormulaVariableSetId] INT NOT NULL,
+[DefaultValue] NVARCHAR(2000) NOT NULL,
+[MinValue] NVARCHAR(50) NOT NULL,
+[MaxValue] NVARCHAR(50) NOT NULL,
+[TimePeriod] TINYINT NOT NULL,
+[PeriodStartDate] DATE NOT NULL,
+[PeriodEndDate] DATE NOT NULL,
+[CurrencyCode] NCHAR(3),
+[CreatedBy] INT NOT NULL,
+[ModifiedBy] INT NOT NULL,
+[DateCreated] DATETIME2(7) NOT NULL,
+[DateModified] DATETIME2(7) NOT NULL,
+[Ts] TIMESTAMP NOT NULL,
+CONSTRAINT [FK_FormulaVariable_Formula] FOREIGN KEY ([FormulaId]) REFERENCES [Formula] ([Id]),
+CONSTRAINT [FK_FormulaVariable_FormulaVariableSet] FOREIGN KEY ([FormulaVariableSetId]) REFERENCES [FormulaVariableSet] ([Id]),
+CONSTRAINT [PK_FormulaVariable_Id] PRIMARY KEY([Id]),
+CONSTRAINT [IDX_FormulaVariable_FormulaId_FormulaVariableSetId_U_N] UNIQUE ([FormulaId],[FormulaVariableSetId]));
+
+
