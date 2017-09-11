@@ -1,0 +1,37 @@
+PostgreSQL does not support dirty reads (READ UNCOMMITTED). As the manual says:
+
+"The SQL standard defines one additional level, READ UNCOMMITTED. In PostgreSQL READ UNCOMMITTED is treated as READ COMMITTED."
+
+
+--1----------------------------
+create table tran_table1(
+id int not null,
+code int not null);
+----------------------------
+insert into public.tran_table1
+(id, code)
+values(1, 203);
+
+select * from tran_table1;
+----------------------------
+begin;
+update tran_table1
+set code = code+100
+where id = 1;
+select pg_sleep(10);
+rollback;
+select code from  tran_table1 where id=1;
+
+
+
+
+
+--2-----------------------------
+set transaction isolation level read uncommitted;
+begin transaction;
+select code from tran_table1 where id = 1;
+commit;
+
+
+
+
