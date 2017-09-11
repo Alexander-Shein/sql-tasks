@@ -1,0 +1,18 @@
+Создать хранимую процедуру которая принимает OrderID удаляет Order и Order Details по этому ID. (DeleteOrderById)
+_____________
+
+--drop if exists
+--DROP PROCEDURE [dbo].[DeleteOrderById];
+
+
+CREATE PROCEDURE [dbo].[DeleteOrderById] @OrderID INT
+AS
+DELETE FROM [dbo].[Order Details]
+WHERE [OrderID] = @OrderID;
+DELETE FROM [dbo].[Orders] 
+WHERE [OrderID] = @OrderID;
+
+
+-- run procedure(as example)
+
+EXEC [dbo].[DeleteOrderById] 10250
