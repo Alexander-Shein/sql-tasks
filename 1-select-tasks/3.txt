@@ -1,3 +1,4 @@
 Create a query to return all customers from USA without Fax:
 
 | CustomerId | CompanyName |
+
