@@ -1,0 +1,97 @@
+--task_createOrder
+
+
+CREATE TYPE dbo.OrderDetailsList
+AS TABLE
+(
+  	ProductID INT,
+	UnitPrice MONEY,
+	Quantity SMALLINT,
+	Discount REAL
+);
+
+
+CREATE PROC dbo.createOrder 
+	@List AS dbo.OrderDetailsList READONLY,
+	@customerId NCHAR(5),
+	@employeeId INT,
+	@orderDate DATETIME,
+	@requiredDate DATETIME,
+	@shippedDate DATETIME,
+	@shipVia INT,
+	@freight MONEY,
+	@shipName NVARCHAR(40),
+	@shipAddress NVARCHAR(60),
+	@shipCity NVARCHAR(15),
+	@shipRegion NVARCHAR(15),
+	@shipPostalCode NVARCHAR(10),
+	@shipCountry NVARCHAR(15)
+AS 
+BEGIN TRY
+BEGIN TRAN;
+	BEGIN 
+	SET NOCOUNT ON;
+	INSERT INTO Orders(
+	CustomerID,
+	EmployeeID,
+	OrderDate,
+	RequiredDate,
+	ShippedDate,
+	ShipVia,
+	Freight,
+	ShipName,
+	ShipAddress,
+	ShipCity,
+	ShipRegion,
+	ShipPostalCode,
+	ShipCountry
+	)
+	VALUES(
+	@customerId,
+	@employeeId,
+	@orderDate,
+	@requiredDate,
+	@shippedDate,
+	@shipVia,
+	@freight,
+	@shipName,
+	@shipAddress,
+	@shipCity,
+	@shipRegion,
+	@shipPostalCode,
+	@shipCountry
+	)	
+	INSERT INTO [dbo].[Order Details](
+	[OrderID],
+	[ProductID],
+	[UnitPrice],
+	[Quantity],
+	[Discount]
+	)
+	SELECT @@IDENTITY, [ProductID], [UnitPrice], 
+	[Quantity], [Discount] FROM @List	
+	END;
+COMMIT TRAN;
+END TRY
+BEGIN CATCH
+	ROLLBACK;
+END CATCH;
+
+
+DECLARE @List dbo.OrderDetailsList
+
+INSERT INTO @List(
+  	[ProductID],
+	[UnitPrice],
+	[Quantity],
+	[Discount])
+VALUES
+(14, 165.5, 10, 0.0)
+
+DECLARE @dateVar DATETIME 
+SET @dateVar = GETDATE()
+
+EXEC createOrder  @List,'WELLI', 1, @dateVar, @dateVar, @dateVar,
+2, 165.5,'Seven Seas Imports','Kirchgasse 6', 'London',
+'PJ', 'N1M2', 'UK'
+
