@@ -3,3 +3,7 @@ Write a SQL query to get Product list of twenty most expensive products:
 | ProductName | UnitPrice |
 
 Order products by price.
+
+SELECT TOP 20 UnitPrice, ProductName
+FROM Northwind.dbo.Products
+ORDER BY UnitPrice DESC
