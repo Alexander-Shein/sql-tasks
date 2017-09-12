@@ -2,3 +2,9 @@ Create a SQL query to display customer details whose total orders amount is more
 
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
 
+SELECT C.CustomerID, C.CompanyName, SUM(OD.UnitPrice * OD.Quantity) AS [TotalOrdersAmount, $]
+FROM Northwind.dbo.Customers C
+JOIN Northwind.dbo.Orders O ON C.CustomerID = O.CustomerID
+JOIN Northwind.dbo.[Order Details] OD ON O.OrderID = OD.OrderID
+GROUP BY C.CompanyName, C.CustomerID
+HAVING SUM(OD.UnitPrice * OD.Quantity) > 10000
