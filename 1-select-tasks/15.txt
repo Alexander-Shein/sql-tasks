@@ -1,3 +1,17 @@
 Create a SQL query to return the total number of orders for every month in 1997 year:
 
 | January | February | March | April | May | June | July | August | September | November | December |
+
+SELECT DISTINCT (SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 01) AS January,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 02) AS February,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 03) AS March,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 04) AS April,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 05) AS May,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 06) AS June,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 07) AS July,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 08) AS August,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 09) AS September,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 10) AS October,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 11) AS November,
+				(SELECT COUNT(OrderID) FROM Northwind.dbo.Orders WHERE DATEPART(MM, OrderDate) = 12) AS December
+FROM Northwind.dbo.Orders
