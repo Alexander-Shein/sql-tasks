@@ -1,0 +1,30 @@
+Lost update 
+to get repetable read problem 3 step
+1) create table with :
+
+DROP  TABLE  IF EXISTS example;
+ CREATE  TABLE example (
+ 	Id INT,
+ 	SecondeFild INT 
+ );
+ INSERT  INTO  example VALUES  (1, 1);
+ 
+ 2) FIRST QUERY :
+ 
+-- START TRANSACTION ISOLATION LEVEL REPEATABLE READ ;
+ START TRANSACTION ISOLATION LEVEL  READ COMMITTED ;
+ -- allowy to get lost upadte and solve it with repetable read
+ select * from example ;
+ select pg_sleep(4);
+ select * from example ;
+ commit;
+
+2) Second QUERY:
+
+
+ START TRANSACTION ISOLATION LEVEL READ COMMITTED   ;
+
+ 
+ INSERT INTO TranIsolLevels VALUES(20,20);
+  COMMIT;
+	
