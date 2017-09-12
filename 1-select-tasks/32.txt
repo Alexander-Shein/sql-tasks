@@ -1,0 +1,92 @@
+DROP PROCEDURE [dbo].[UpdateOrder];
+DROP TYPE [OrderDetails];
+CREATE TYPE OrderDetails
+AS TABLE
+(
+  ProductID INT,
+  UnitPrice INT,
+  Quantity INT,
+  Discount INT
+);
+--call it firstly
+
+CREATE PROCEDURE [dbo].[UpdateOrder] @OrderID INT,
+@CustomerID NCHAR(5),
+@EmployeeID INT,
+@OrderDate DATETIME,
+@RequiredDate DATETIME,
+@ShippedDate DATETIME,
+@ShipVia INT,
+@Freight MONEY,
+@ShipName NVARCHAR(40),
+@ShipAddress NVARCHAR(60),
+@ShipCity NVARCHAR(15),
+@ShipRegion NVARCHAR(15),
+@ShipPostalCode NVARCHAR(10),
+@ShipCountry NVARCHAR(15),
+@OrderDetailsList AS OrderDetails READONLY
+AS
+BEGIN TRAN;
+BEGIN TRY
+	UPDATE [dbo].[Orders] 
+	SET 
+		[CustomerID] = @CustomerID,
+		[EmployeeID] = @EmployeeID,
+		[OrderDate] = @OrderDate,
+		[RequiredDate] = @RequiredDate,
+		[ShippedDate] = @ShippedDate,
+		[ShipVia] = @ShipVia,
+		[Freight] = @Freight,
+		[ShipName] = @ShipName,
+		[ShipAddress] = @ShipAddress,
+		[ShipCity] = @ShipCity,
+		[ShipRegion] = @ShipRegion,
+		[ShipPostalCode] = @ShipPostalCode,
+		[ShipCountry] = @ShipCountry
+	WHERE [OrderID] = @OrderID;
+	
+	DELETE FROM [dbo].[Order Details]
+	WHERE [OrderID] = @OrderID;
+	
+	INSERT INTO [dbo].[Order Details]
+		([OrderID],
+	     [ProductID],
+	     [UnitPrice],
+	     [Quantity],
+	     [Discount])
+	SELECT @OrderID, *
+	FROM  @OrderDetailsList;
+	
+	COMMIT TRAN;
+END TRY
+BEGIN CATCH
+	SELECT * FROM [dbo].[Order Details];
+	ROLLBACK TRAN;
+END CATCH;
+--then create a procedure
+
+DECLARE @ODL AS OrderDetails;
+
+INSERT INTO @ODL ( 
+ 	ProductID,
+ 	UnitPrice,
+	Quantity,
+	Discount)
+VALUES (13, 3, 3, 0), (14, 3, 3, 0), (15, 3, 3, 0);
+
+EXEC [dbo].[UpdateOrder] 11092, 
+			'WOLZA', 
+			4, 
+			'2001-07-09 00:00:00', 
+			'2001-08-06 00:00:00', 
+			'2001-07-11 00:00:00', 
+			2, 
+			999.3000, 
+			'Suprêmes délicess', 
+			'Boulevard Tirou, 2555', 
+			'Charleroii', 
+			null,
+			'B-8000', 
+			'Belgium',
+			@ODL;
+--then call the procedure
