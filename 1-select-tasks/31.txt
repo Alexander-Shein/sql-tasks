@@ -66,8 +66,8 @@ BEGIN TRY
 	           ,[UnitPrice]
 	           ,[Quantity]
 	           ,[Discount])
-	        SELECT (SELECT TOP(1) [OrderID] FROM [dbo].[Orders] ORDER BY [OrderID] DESC), *
-	        FROM  @OrderDetailsList;
+	        SELECT (SELECT @@IDENTITY), *
+	        FROM  @OrderDetailsList
 	COMMIT TRAN;
 END TRY
 BEGIN CATCH
