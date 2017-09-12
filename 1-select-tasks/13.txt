@@ -6,6 +6,6 @@ Maks Sarvas: 'SELECT  (SELECT  COUNT([P].Discontinued)
 FROM [dbo].[Products] [P])  AS [TotalOfCurrentProducts]  , 
 COUNT([P].Discontinued)  AS [TotalOfDiscontinuedProducts]
 FROM [dbo].[Products] [P]
-WHERE [P].[Discontinued]>0
+WHERE [P].[Discontinued]=1
 
 '
