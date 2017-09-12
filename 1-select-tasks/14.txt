@@ -6,5 +6,5 @@ Maksim Sarvas :'SELECT [P].[ProductName],
 [P].[UnitsOnOrder] AS [UnitsInOrder], 
 [P].[UnitsInStock] 
 FROM [dbo].[Products] [P]
-WHERE ([P].[UnitsOnOrder] - [P].[UnitsInStock])>0
+WHERE [P].[UnitsOnOrder] > [P].[UnitsInStock]
 '
