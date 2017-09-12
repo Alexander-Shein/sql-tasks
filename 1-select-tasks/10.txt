@@ -3,4 +3,4 @@ Write a query to get discontinued Product list:
 
 Maksim Sarvas : 'SELECT [P].[ProductID], [P].[ProductName] AS [Name]
 FROM [dbo].[Products] [P]
-WHERE [P].[Discontinued] >0;'
+WHERE [P].[Discontinued] = 1;'
