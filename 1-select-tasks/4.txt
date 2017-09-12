@@ -2,4 +2,17 @@ Create a query to return:
 
 | Customer Id | Total number of Orders | % of all orders |
  
+<<<<<<< Updated upstream
 order data by % - higher percent at the top.
+=======
+order data by % - higher percent at the top.
+
+--task4
+
+SELECT [o].[CustomerID], COUNT([o].[CustomerID]) AS [Total number of Orders],
+(SELECT COUNT([o].[OrderID])*100.0/COUNT([ord].[OrderID])
+FROM [dbo].[Orders] [ord]) AS [ % of all orders ] 
+FROM [dbo].[Orders] [o]
+GROUP BY [o].CustomerID
+ORDER BY [ % of all orders ] DESC
+>>>>>>> Stashed changes
