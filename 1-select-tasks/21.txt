@@ -2,6 +2,7 @@ Write a SQL statement to get the maximum purchase amount of all the orders.
 
 | Order Id | Maximum Purchase Amount, $ |
 
-Maksim Sarvas : 'SELECT  [OD].[OrderID], [OD].[UnitPrice]*[OD].[Quantity] AS [Maximum Purchase Amount, $] FROM [dbo].[Order Details] [OD]
-WHERE ([OD].[UnitPrice]*[OD].[Quantity])  = ( SELECT MAX([OD1].[UnitPrice]*[OD1].[Quantity])FROM [dbo].[Order Details] [OD1])
+Maksim Sarvas : 'SELECT TOP(1)  [OD].[OrderID] , SUM([OD].[UnitPrice]*[OD].[Quantity]) AS [Maximum Purchase Amount, $]
+  FROM [dbo].[Order Details] [OD]
+group by [od].[OrderID]
 ORDER BY [Maximum Purchase Amount, $] DESC'
