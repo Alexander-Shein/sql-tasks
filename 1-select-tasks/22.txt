@@ -2,18 +2,15 @@ Create a SQL query to display the name of each customer along with their most ex
 
 | CompanyName | ProductName | PricePerItem |
 
-Maksim Sarvas : 'SELECT TOP (10000) [C].[CompanyName], 
-[P].[ProductName], MAX([OD].[UnitPrice]) AS [PricePerIteam] 
+Maksim Sarvas : 'SELECT DISTINCT top(100) [C].[CompanyName], 
+[P].[ProductName], [P].[UnitPrice] AS [PricePerIteam] 
 FROM [dbo].[Customers][C]
 JOIN [dbo].[Orders][O] ON [C].[CustomerID]=[O].[CustomerID]
 JOIN [dbo].[Order Details][OD] ON [O].[OrderID] = [OD].[OrderID]
 JOIN [dbo].[Products][P] ON [OD].[ProductID] = [P].[ProductID]
-GROUP BY [C].[CustomerID], [C].[CompanyName], [P].[ProductName], [P].[UnitPrice]
-HAVING [P].[UnitPrice] = (
-SELECT MAX([P1].[UnitPrice]) 
-FROM [dbo].[Products] [P1] 
-JOIN [dbo].[Order Details][OD1] ON [P1].[ProductID] = [OD1].[ProductID]
-JOIN [dbo].[Orders][O1] ON [OD1].[OrderID]=[O1].[OrderID]
-WHERE [O1].[CustomerID] = [C].[CustomerID])
-ORDER BY [C].[CustomerID]
+WHERE [p].[UnitPrice] = ( SELECT MAX([ord2].[UnitPrice]) FROM [dbo].[Order Details] [ord2] 
+JOIN [dbo].[Orders][or] ON [ord2].[OrderID]=[or].[OrderID] 	 
+JOIN [dbo].[Products][prod] ON [prod].[ProductID] = [ord2].[ProductID]
+WHERE [or].[CustomerID] = [c].[CustomerID])
+ORDER BY [p]. [UnitPrice] DESC
 '
