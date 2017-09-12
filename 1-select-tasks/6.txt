@@ -2,6 +2,6 @@ Create a query to return all products with category and supplier company names:
 
 | ProductName | CategoryName | SupplierCompanyName |
 
-Maksim Sarvas: 'SELECT [P].[ProductName], [C].[CategoryName],[S].[CompanyName] AS [SupplierCompanyName] FROM [dbo].[Products] [P]
-FULL JOIN [dbo].[Suppliers] [S] ON [S].[SupplierID] = [P].[SupplierID]
-FULL JOIN [dbo].[Categories][C] ON [C].[CategoryID] = [P].[CategoryID]'
+Maksim Sarvas: SELECT [P].[ProductName], [C].[CategoryName],[S].[CompanyName] AS [SupplierCompanyName] FROM [dbo].[Products] [P]
+LEFT JOIN [dbo].[Suppliers] [S] ON [S].[SupplierID] = [P].[SupplierID]
+LEFT JOIN [dbo].[Categories][C] ON [C].[CategoryID] = [P].[CategoryID]'
