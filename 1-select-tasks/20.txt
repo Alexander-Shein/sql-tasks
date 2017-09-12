@@ -1,3 +1,10 @@
 Create a SQL query to find the employee that sold products for the largest amount:
 
 | EmployeeId | Employee Full Name | Amount, $ |
+
+SELECT TOP (1) E.EmployeeID, E.FirstName + ' ' + E.LastName AS FullName, SUM(OD.UnitPrice * OD.Quantity) AS [Amount, $]
+FROM Northwind.dbo.Employees E
+JOIN Northwind.dbo.Orders O ON E.EmployeeID = O.EmployeeID
+JOIN Northwind.dbo.[Order Details] OD ON O.OrderID = OD.OrderID
+GROUP BY E.EmployeeID, E.FirstName, E.LastName
+ORDER BY [Amount, $]
