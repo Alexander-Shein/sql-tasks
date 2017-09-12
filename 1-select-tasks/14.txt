@@ -4,8 +4,7 @@ Create a SQL query to get Product list of stock is less than the quantity on ord
 
   SELECT 
 	[p].[ProductName],
-	[OD].[Quantity],
+	[p].[UnitsOnOrder],
 	[p].[UnitsInStock]
   FROM [dbo].[Products] [p]
-  JOIN [dbo].[Order Details] [OD] ON [OD].[ProductID]=[p].[ProductID]
-  WHERE [OD].[Quantity]>[p].[UnitsInStock];
+  WHERE [p].[UnitsOnOrder]>[p].[UnitsInStock];
