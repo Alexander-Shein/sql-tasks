@@ -1,0 +1,63 @@
+--task D
+--Создать хранимую процедуру которая принимает в себя Order ID и информацию о Order и массив Order Details и обновляет Order и его Order Details в системе
+CREATE TYPE [OrderDetailsType] AS TABLE
+(
+ ProductId INT NOT NULL,
+ UnitPrice MONEY NOT NULL,
+ Quantity SMALLINT NOT NULL,
+ Discount REAL NOT NULL
+);
+DROP PROCEDURE UpdateOrder;
+CREATE PROCEDURE UpdateOrder
+@OrderId INT,
+@CustomerId NCHAR(5),
+@EmployeeId INT,
+@OrderDate DATE,
+@RequiredDate DATE,
+@ShippedDate DATE,
+@ShipVia INT,
+@Freight MONEY,
+@ShipName NVARCHAR(40),
+@ShipAddress NVARCHAR(60),
+@ShipCity NVARCHAR(15),
+@ShipRegion NVARCHAR(15),
+@ShipPostalCode NVARCHAR(10),
+@ShipCountry NVARCHAR(15),
+@OrderDetailsData AS OrderDetailsType READONLY
+AS
+BEGIN TRAN
+BEGIN TRY
+    UPDATE [Orders]
+    SET CustomerId = @CustomerId,
+    EmployeeId = @EmployeeId,
+    OrderDate = @OrderDate,
+    RequiredDate = @RequiredDate,
+    ShippedDate = @ShippedDate,
+    ShipVia = @ShipVia,
+    Freight = @Freight,
+    ShipName = @ShipName,
+    ShipAddress = @ShipAddress,
+    ShipCity = @ShipCity,
+    ShipRegion = @ShipRegion,
+    ShipPostalCode = @ShipPostalCode,
+    ShipCountry = @ShipCountry
+    WHERE OrderId = @OrderId
+
+    DELETE FROM [Order Details]
+    WHERE OrderId = @OrderId
+
+    INSERT INTO [Order Details](OrderId, ProductID, UnitPrice, Quantity, Discount)
+    SELECT @OrderId, [ProductID],[UnitPrice],[Quantity],[Discount]
+    FROM @OrderDetailsData
+END TRY
+BEGIN CATCH
+ROLLBACK
+END CATCH;
+COMMIT TRAN
+
+DECLARE @dt DATETIME
+SET @dt=GETDATE()
+DECLARE @OrderDetailsData OrderDetailsType
+INSERT  @OrderDetailsData (ProductId, UnitPrice, Quantity, Discount)
+VALUES (45, 544, 3, 0)
+EXEC UpdateOrder 10248, 'CATRAT', 8,@dt,@dt,@dt, 3, 45, 'name','adress', 'city', 'region', 'postalCode', 'Country', @OrderDetailsData
