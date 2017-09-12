@@ -7,9 +7,9 @@ Order data by first column.
 Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
 
   SELECT 
-	[e1].[EmployeeID],
-	[e1].[FirstName]+' '+[e1].[LastName],
-	[e2].[FirstName]+' '+[e2].[LastName]
-  FROM [dbo].[Employees] [e1] 
-  LEFT JOIN [dbo].[Employees] [e2] ON [e1].[ReportsTo]=[e2].[EmployeeID]
-  ORDER BY [e1].[EmployeeID];
+	[e].[EmployeeID] AS 'EmployeeId',
+	[e].[FirstName]+' '+[e].[LastName] AS 'FullName',
+	ISNULL([reportsto].[FirstName]+' '+[reportsto].[LastName],'-') AS 'ReportsTo'
+  FROM [dbo].[Employees] [e] 
+  LEFT JOIN [dbo].[Employees] [reportsto] ON [e].[ReportsTo]=[reportsto].[EmployeeID]
+  ORDER BY [e].[EmployeeID];
