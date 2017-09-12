@@ -1,7 +1,6 @@
 Write a query to get discontinued Product list:
 | ProductId | Name | 
 
-Maksim Sarvas : 'SELECT [OD].[ProductID], [P].[ProductName] AS [Name]
+Maksim Sarvas : 'SELECT [P].[ProductID], [P].[ProductName] AS [Name]
 FROM [dbo].[Products] [P]
-FULL JOIN [dbo].[Order Details] [OD] ON [OD].[ProductID] = [P].[ProductID]
-WHERE [OD].[Discount] >0;'
+WHERE [P].[Discontinued] >0;'
