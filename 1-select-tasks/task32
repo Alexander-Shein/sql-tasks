@@ -1,0 +1,69 @@
+USE NORTHWIND;
+--task C
+--Создать хранимую процедуру которая принимает в себя информацию о Order и массив Order Details и создает новый Order в системе. (CreateOrder)
+DROP TYPE OrderDetailesList;
+CREATE TYPE [dbo].[OrderDetailesList]
+ AS TABLE
+ (	[ProductID] INT NOT NULL,
+     [UnitPrice] MONEY NOT NULL,
+     [Quantity] SMALLINT NOT NULL,
+     [Discount] REAL NOT NULL);
+
+ CREATE OR ALTER PROCEDURE [dbo].[CreateOrder]
+ 	@OrderDetailesList AS [dbo].[OrderDetailesList] READONLY,
+ 	@CustomerId NCHAR(5),
+ 	@EmployeeId INT,
+ 	@OrderDate DATETIME,
+ 	@RequiredDate DATETIME,
+ 	@ShippedDate DATETIME,
+ 	@ShipVia INT,
+ 	@Freight MONEY,
+ 	@ShipName NVARCHAR(40),
+ 	@ShipAddress NVARCHAR(60),
+ 	@ShipCity NVARCHAR(15),
+ 	@ShipRegion NVARCHAR(15),
+ 	@ShipPostalCode NVARCHAR(10),
+ 	@ShipCountry NVARCHAR(15)
+ AS
+ BEGIN
+ 	SET NOCOUNT ON;
+
+
+ 		BEGIN TRY
+ 			BEGIN TRAN;
+ 				INSERT INTO [dbo].[Orders]
+ 				VALUES(	@CustomerID,
+ 						@EmployeeID,
+ 						@OrderDate,
+ 						@RequiredDate,
+ 						@ShippedDate,
+ 						@ShipVia,
+ 						@Freight,
+ 						@ShipName,
+ 						@ShipAddress,
+ 						@ShipCity,
+ 						@ShipRegion,
+ 						@ShipPostalCode,
+ 						@ShipCountry)
+
+ 				INSERT INTO [dbo].[Order Details]
+ 				([dbo].[Order Detailes].[OrderId],
+ 				[dbo].[Order Detailes].[ProductId],
+ 				[dbo].[Order Detailes].[UnitPrice],
+ 				[dbo.[Order Detailes].[Quantity],
+ 				[dbo].[Order Detailes].[Discount])
+
+ 				SELECT		@@IDENTITY,
+ 							[ProductID],
+ 							[UnitPrice],
+ 							[Quantity],
+ 							[Discount]
+ 				FROM @OrderDetailesList
+ 			COMMIT TRAN;
+ 		END TRY
+ 		BEGIN CATCH
+ 			ROLLBACK;
+ 		END CATCH;
+
+
+ END
