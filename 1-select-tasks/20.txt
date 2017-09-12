@@ -1,3 +1,13 @@
 Create a SQL query to find the employee that sold products for the largest amount:
 
 | EmployeeId | Employee Full Name | Amount, $ |
+
+ SELECT TOP(1)
+	[e].[EmployeeID],
+	SUM([OD].[Quantity]*[OD].[UnitPrice]) AS 'Amount, $'
+  FROM [dbo].[Orders] [o]
+  JOIN [dbo].[Order Details] [OD] ON [OD].[OrderID]=[o].[OrderID]
+  JOIN [dbo].[Employees] [e] ON [e].[EmployeeID]=[o].[EmployeeID]
+  GROUP BY [e].[EmployeeID]
+  HAVING SUM([OD].[Quantity]*[OD].[UnitPrice])>0
+  ORDER BY SUM([OD].[Quantity]*[OD].[UnitPrice]) DESC
