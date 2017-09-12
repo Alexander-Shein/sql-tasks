@@ -2,10 +2,14 @@ Create a SQL query to display customer details whose total orders amount is more
 
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
 
-SELECT 
-	[c].[CustomerID],
-	[c].[CompanyName],
-	(SELECT SUM([OD].[UnitPrice]*[OD].[Quantity]) FROM [dbo].[Orders] [o] JOIN [dbo].[Order Details] [OD] ON [o].[OrderID]=[OD].[OrderID] WHERE [c].[CustomerID]=[o].[CustomerID] ) 
-  FROM [dbo].[Customers] [c]
-  WHERE (SELECT SUM([OD].[UnitPrice]*[OD].[Quantity]) FROM [dbo].[Orders] [o] JOIN [dbo].[Order Details] [OD] ON [o].[OrderID]=[OD].[OrderID] WHERE [c].[CustomerID]=[o].[CustomerID])>10000;
+  SELECT [sum].[CustomerID], [c].[CompanyName], [sum].[TotalOrdersAmount, $]
+  FROM
+  (
+	SELECT
+	 [o].[CustomerID], SUM([OD].[UnitPrice]*[OD].[Quantity]) AS 'TotalOrdersAmount, $'
+	FROM [dbo].[Orders] [o]
+	JOIN [dbo].[Order Details] [OD] ON [o].[OrderID]=[OD].[OrderID]
+	GROUP BY [o].[CustomerID]
+	HAVING SUM([OD].[UnitPrice]*[OD].[Quantity])>10000
+   ) [sum] JOIN [dbo].[Customers] [c] ON [c].[CustomerID]=[sum].[CustomerID]; 
 
