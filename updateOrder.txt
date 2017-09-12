@@ -1,0 +1,86 @@
+--task_updateOrder
+USE Northwind;
+
+CREATE TYPE dbo.OrderDetailsList
+AS TABLE
+(
+  	ProductID INT,
+	UnitPrice MONEY,
+	Quantity SMALLINT,
+	Discount REAL
+);
+
+
+CREATE PROC dbo.updateOrder 
+	@List AS dbo.OrderDetailsList READONLY,
+	@orderId INT,
+	@customerId NCHAR(5),
+	@employeeId INT,
+	@orderDate DATETIME,
+	@requiredDate DATETIME,
+	@shippedDate DATETIME,
+	@shipVia INT,
+	@freight MONEY,
+	@shipName NVARCHAR(40),
+	@shipAddress NVARCHAR(60),
+	@shipCity NVARCHAR(15),
+	@shipRegion NVARCHAR(15),
+	@shipPostalCode NVARCHAR(10),
+	@shipCountry NVARCHAR(15)
+AS 
+BEGIN TRY
+BEGIN TRAN;
+	BEGIN 
+	SET NOCOUNT ON;
+	UPDATE dbo.Orders
+	SET
+	CustomerID = @customerId,
+	EmployeeID =@employeeId,
+	OrderDate = @orderDate,
+	RequiredDate = @requiredDate,
+	ShippedDate = @shippedDate,
+	ShipVia = @shipVia,
+	Freight=@freight,
+	ShipName= @shipName,
+	ShipAddress=@shipAddress,
+	ShipCity= @shipCity,
+	ShipRegion = @shipRegion,
+	ShipPostalCode = @shipPostalCode,
+	ShipCountry =@shipCountry WHERE @orderId=[Orders].[OrderID]
+	DELETE FROM [dbo].[Order Details] WHERE ([Order Details].[orderId]=@orderId)
+	INSERT INTO [dbo].[Order Details](
+	[OrderID],
+	[ProductID],
+	[UnitPrice],
+	[Quantity],
+	[Discount]
+	)
+	SELECT @orderId, ProductID, UnitPrice, 
+	Quantity, Discount FROM @List	
+	END;
+COMMIT TRAN;
+END TRY
+BEGIN CATCH
+	ROLLBACK;
+END CATCH;
+
+
+DECLARE @List dbo.OrderDetailsList
+
+INSERT INTO @List(
+  	[ProductID],
+	[UnitPrice],
+	[Quantity],
+	[Discount])
+VALUES
+(14, 165.5, 10, 0.0)
+
+DECLARE @dateVar DATETIME 
+SET @dateVar = GETDATE()
+
+EXEC updateOrder  @List,10255,'OLOLOL', 1, @dateVar, @dateVar, @dateVar,
+2, 165.5,'Seven Seas Imports','Kirchgasse 6', 'London',
+'PJ', 'URURU', 'UK'
+
+SELECT * FROM Orders;
+SELECT * FROM [Order Details];
