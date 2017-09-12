@@ -1,0 +1,17 @@
+--task_getOrderById
+DROP PROC GetOrderById
+----------------------
+
+
+CREATE PROC GetOrderById
+@orderID INT
+AS 
+BEGIN
+SELECT [OrderID], [CustomerID], [EmployeeID], [OrderDate], [RequiredDate],
+[ShippedDate], [ShipVia], [Freight], [ShipName], [ShipAddress], [ShipCity]
+FROM [dbo].[Orders][o] WHERE ([o].[OrderID] = @orderID);
+SELECT [OrderID], [ProductID], [UnitPrice], [Quantity], [Discount] FROM [dbo].[Order Details][od] WHERE ([od].[OrderID] = @orderID)
+END
+
+
+EXECUTE GetOrderById @orderID = 10250
