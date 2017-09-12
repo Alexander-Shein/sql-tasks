@@ -1,0 +1,153 @@
+A)-- create procedure to get order by id
+Create procedure [dbo].[GetOrderByID] 
+ @GetOrderByID INT
+
+As 
+BEGIN TRY
+SELECT [o].[OrderID]
+      ,[o].[CustomerID]
+      ,[o].[EmployeeID]
+      ,[o].[OrderDate]
+      ,[o].[RequiredDate]
+      ,[o].[ShippedDate]
+      ,[o].[ShipVia]
+      ,[o].[Freight]
+      ,[o].[ShipName]
+      ,[o].[ShipAddress]
+      ,[o].[ShipCity]
+      ,[o].[ShipRegion]
+      ,[o].[ShipPostalCode]
+      ,[o].[ShipCountry]FROM [dbo].[Orders] [o]
+WHERE [o].[OrderID] = @GetOrderByID;
+
+SELECT [od].[OrderID]
+      ,[od].[ProductID]
+      ,[od].[UnitPrice]
+      ,[od].[Quantity]
+      ,[od].[Discount] FROM [dbo].[Order Details] [od]
+WHERE [od].[OrderID] = @GetOrderByID;
+END TRY
+BEGIN CATCH
+ROLLBACK;
+END CATCH
+
+--test of @GetOrderByID
+EXECUTE [dbo].[GetOrderByID] @GetOrderByID = '10450'
+
+Б) Create procedure [dbo].[DeleteOrderById] 
+ @DeleteOrderById INT
+
+As 
+BEGIN TRY
+DELETE FROM [dbo].[Order Details]
+WHERE [dbo].[Order Details].[OrderID] = @DeleteOrderById;
+
+DELETE FROM [dbo].[Orders]
+WHERE [dbo].[Orders].[OrderID] = @DeleteOrderById;
+
+
+
+END TRY
+BEGIN CATCH
+BEGIN TRANSACTION;
+ROLLBACK;
+END CATCH;
+-- test of @DeleteOrderById
+EXECUTE [dbo].[DeleteOrderById] @DeleteOrderById = '10450'
+-- now order 10450 EXTERMINATEED! we can see it with 
+EXECUTE [dbo].[GetOrderByID] @GetOrderByID = '10450'
+
+
+В) -- create custom type
+CREATE TYPE [dbo].[Type_CreateOrder] 
+ AS TABLE (
+ [ProductID] int
+ ,[UnitPrice] money
+ ,[Quantity] smallint	
+ ,[Discount] real
+)
+
+--create PROCEDURE
+CREATE PROCEDURE [dbo].[CreateOrder]
+@ListOfOrderDetails AS [dbo].[Type_CreateOrder] READONLY,
+@CreateOrder_OrderID nchar(20),
+@CreateOrder_CustomerID nchar(20),
+@CreateOrder_EmployeeID int,
+@CreateOrder_OrderDate datetime,
+@CreateOrder_RequiredDate datetime,
+@CreateOrder_ShippedDate datetime,
+@CreateOrder_ShipVia int,
+@CreateOrder_Freight money,
+@CreateOrder_ShipName nvarchar(200),
+@CreateOrder_ShipAddress nvarchar(300),
+@CreateOrder_ShipCity nvarchar(50),
+@CreateOrder_ShipRegion nvarchar(70),
+@CreateOrder_ShipPostalCode nvarchar(15),
+@CreateOrder_ShipCountry nvarchar(70)
+As 
+BEGIN TRY
+INSERT INTO [dbo].[Orders](
+	[OrderID]
+      ,[CustomerID]
+      ,[EmployeeID]
+      ,[OrderDate]
+      ,[RequiredDate]
+      ,[ShippedDate]
+      ,[ShipVia]
+      ,[Freight]
+      ,[ShipName]
+      ,[ShipAddress]
+      ,[ShipCity]
+      ,[ShipRegion]
+      ,[ShipPostalCode]
+      ,[ShipCountry])
+	VALUES(
+			@CreateOrder_OrderID,
+			@CreateOrder_CustomerID ,
+			@CreateOrder_EmployeeID ,
+			@CreateOrder_OrderDate ,
+			@CreateOrder_RequiredDate ,
+			@CreateOrder_ShippedDate ,
+			@CreateOrder_ShipVia ,
+			@CreateOrder_Freight ,
+			@CreateOrder_ShipName ,
+			@CreateOrder_ShipAddress,
+			@CreateOrder_ShipCity ,
+			@CreateOrder_ShipRegion ,
+			@CreateOrder_ShipPostalCode ,
+			@CreateOrder_ShipCountry );
+	INSERT INTO [dbo].[Order Details](
+					  [OrderID]
+					 ,[ProductID] 
+					 ,[UnitPrice] 
+					 ,[Quantity] 	
+					 ,[Discount])
+
+	SELECT @@IDENTITY
+	,[ProductID]
+	,[UnitPrice] 
+	,[Quantity] 	
+	,[Discount]
+	FROM @ListOfOrderDetails;
+	
+END TRY
+BEGIN CATCH
+ROLLBACK;
+END CATCH
+
+-- test for PROCEDURE
+BEGIN TRANSACTION 
+BEGIN TRY 
+DECLARE @InputTable [dbo].[Type_CreateOrder]
+ 
+ INSERT INTO @InputTable(ProductID, UnitPrice, Quantity, Discount)
+ VALUES(22, 16.90, 6, 0.05), (25, 16.99, 4, 0.1) 
+ 
+ DECLARE @dt as datetime
+ SET @dt=GETDATE()
+ 
+ EXECUTE [dbo].[CreateOrder] 'VINET', 5, @dt, @dt, @dt, 3, 32.3800, 'Vins et alcools Chevalier', '59 rue de l''Abbaye', 'Reims', NULL, '51100', 'France', @InputTable;
+ END TRY
+ BEGIN CATCH
+ ROLLBACK
+ END CATCH;
