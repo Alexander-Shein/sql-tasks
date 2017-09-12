@@ -3,21 +3,20 @@
 CREATE PROC DeleteOrderById
 @orderID INT
 AS 
-BEGIN 
-	DELETE 
-	FROM [dbo].[Orders]
-		WHERE ( [Orders].[OrderID] = @orderID);
-	DELETE
-	FROM [dbo].[Order Details]
-		WHERE ( [Order Details].[OrderID] = @orderID)
-END
-
-
 BEGIN TRY
 BEGIN TRAN;
-	EXEC DeleteOrderById @orderID = 10248;
+	BEGIN 
+		DELETE 
+		FROM [dbo].[Orders]
+			WHERE ( [Orders].[OrderID] = @orderID);
+		DELETE
+		FROM [dbo].[Order Details]
+			WHERE ( [Order Details].[OrderID] = @orderID)
+	END
 COMMIT TRAN;
 END TRY
 BEGIN CATCH
 	ROLLBACK;
 END CATCH;	
+	
+EXEC DeleteOrderById @orderID = 10248;	
