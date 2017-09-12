@@ -2,9 +2,8 @@ Create a SQL query to get Product list (name, unit price) where products cost be
 
 | ProductName | UnitPrice |
 
-Maksim Sarvas: 'SELECT [P].[ProductName], [OD].[UnitPrice]
+Maksim Sarvas: 'SELECT [P].[ProductName], [p].[UnitPrice]
 FROM [dbo].[Products] [P]
-FUll JOIN [dbo].[Order Details] [OD] ON [OD].[ProductID] = [P].[ProductID]
-WHERE [OD].[UnitPrice] BETWEEN 5 AND 15
-ORDER BY [OD].[UnitPrice] DESC'
+WHERE [P].[UnitPrice] BETWEEN 5 AND 15
+ORDER BY [P].[UnitPrice] DESC'
 
