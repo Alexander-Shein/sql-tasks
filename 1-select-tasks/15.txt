@@ -16,3 +16,4 @@ SELECT COUNT(CASE WHEN DATEPART(MM, OrderDate) = 01 then 1 ELSE NULL END) AS Jan
 	   COUNT(CASE WHEN DATEPART(MM, OrderDate) = 12 then 1 ELSE NULL END) AS December
 
 FROM Northwind.dbo.Orders
+WHERE YEAR(OrderDate) = 1997
