@@ -1,4 +1,4 @@
---lost read
+--non-repeatable read
 
 create table Banks(
 	Id serial primary key not null,
@@ -7,6 +7,8 @@ create table Banks(
 )
 
 insert into Banks(Name,Balance) values('Lisa', 10), ('Bart', 5)
+--UPDATE banks SET balance = 10 WHERE Id = 1;
+--SELECT*FROM banks
 
 --Transaction_1
 BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED;
@@ -20,4 +22,3 @@ BEGIN TRANSACTION ISOLATION LEVEL READ COMMITTED;
 UPDATE banks SET balance = 15 WHERE Id = 1;
 SELECT*FROM banks;
 COMMIT;
-
