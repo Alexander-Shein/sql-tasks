@@ -2,15 +2,24 @@ Create a SQL query to return the total number of orders for every month in 1997 
 
 | January | February | March | April | May | June | July | August | September | November | December |
 
-Maksim Sarvas:'SELECT  (SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.01.01' AND '1997.01.31') AS [January],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.02.01' AND '1997.02.28') AS [February],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.03.01' AND '1997.03.31') AS [March],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.04.01' AND '1997.04.30') AS [April],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.05.01' AND '1997.05.31') AS [May],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.06.01' AND '1997.06.30') AS [June],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.07.01' AND '1997.07.31') AS [July],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.08.01' AND '1997.08.30') AS [August],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.09.01' AND '1997.09.30') AS [September],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE   [O].[OrderDate]  BETWEEN '1997.10.01' AND '1997.10.31') AS [October],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE  [O].[OrderDate] BETWEEN '1997.11.01' AND '1997.11.30') AS [November],
-(SELECT COUNT([O].[OrderDate]) FROM [dbo].[Orders] [O] WHERE  [O].[OrderDate] BETWEEN '1997.12.01' AND '1997.12.31') AS [December]'
+Maksim Sarvas:'SELECT 
+     [1] AS 'January',
+     [2] AS 'February',
+     [3] AS 'March',
+     [4] AS 'April',
+     [5] AS 'May',
+     [6] AS 'June', 
+     [7] AS 'July',
+     [8] AS 'August',
+     [9] AS 'September',
+     [10] AS 'October',
+     [11] AS 'November',
+     [12] AS 'December' FROM(
+ SELECT MONTH([o].[OrderDate]) AS [Months], COUNT(*) AS 'OrdersSum'
+ FROM [Orders] [o]
+ WHERE YEAR([o].[OrderDate]) = 1997
+ GROUP BY MONTH([o].[OrderDate])) AS [s]
+ PIVOT(
+      SUM(OrdersSum)
+      FOR [Months] IN ([1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12])
+  ) AS [p]'
