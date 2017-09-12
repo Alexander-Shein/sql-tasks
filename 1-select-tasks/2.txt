@@ -6,5 +6,6 @@ Maksim Sarvas:'select [od].[OrderID],
 SUM([od].[Quantity]*[od].[UnitPrice]) as [Order Total Price], 
 (SUM([od].[Discount]*[od].[Quantity]))/(SUM([od].[Quantity]*[od].[UnitPrice]))*100 as [Total Order Discount, %] 
 FROM [dbo].[Order Details] [od]
- GROUP BY [od].[OrderID];
+ GROUP BY [od].[OrderID]
+ ORDER BY [od].[OrderID] DESC;
 '
