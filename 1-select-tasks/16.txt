@@ -1,3 +1,7 @@
 Create a SQL query to return all orders where ship postal code is provided:
 
 | OrderId | CustomerId | ShipCountry |
+
+SELECT OrderID, CustomerID, ShipCountry
+FROM Northwind.dbo.Orders
+WHERE ShipPostalCode IS NOT NULL
