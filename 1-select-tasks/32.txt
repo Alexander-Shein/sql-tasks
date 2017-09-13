@@ -1,0 +1,88 @@
+
+
+
+В) -- create custom type
+CREATE TYPE [dbo].[Type_CreateOrder] 
+ AS TABLE (
+ [ProductID] int
+ ,[UnitPrice] money
+ ,[Quantity] smallint	
+ ,[Discount] real
+)
+
+--create PROCEDURE
+CREATE PROCEDURE [dbo].[CreateOrder]
+@ListOfOrderDetails AS [dbo].[Type_CreateOrder] READONLY,
+@CreateOrder_OrderID nchar(20),
+@CreateOrder_CustomerID nchar(20),
+@CreateOrder_EmployeeID int,
+@CreateOrder_OrderDate datetime,
+@CreateOrder_RequiredDate datetime,
+@CreateOrder_ShippedDate datetime,
+@CreateOrder_ShipVia int,
+@CreateOrder_Freight money,
+@CreateOrder_ShipName nvarchar(200),
+@CreateOrder_ShipAddress nvarchar(300),
+@CreateOrder_ShipCity nvarchar(50),
+@CreateOrder_ShipRegion nvarchar(70),
+@CreateOrder_ShipPostalCode nvarchar(15),
+@CreateOrder_ShipCountry nvarchar(70)
+As 
+BEGIN TRY
+INSERT INTO [dbo].[Orders](
+	[OrderID]
+      ,[CustomerID]
+      ,[EmployeeID]
+      ,[OrderDate]
+      ,[RequiredDate]
+      ,[ShippedDate]
+      ,[ShipVia]
+      ,[Freight]
+      ,[ShipName]
+      ,[ShipAddress]
+      ,[ShipCity]
+      ,[ShipRegion]
+      ,[ShipPostalCode]
+      ,[ShipCountry])
+	VALUES(
+			@CreateOrder_OrderID,
+			@CreateOrder_CustomerID ,
+			@CreateOrder_EmployeeID ,
+			@CreateOrder_OrderDate ,
+			@CreateOrder_RequiredDate ,
+			@CreateOrder_ShippedDate ,
+			@CreateOrder_ShipVia ,
+			@CreateOrder_Freight ,
+			@CreateOrder_ShipName ,
+			@CreateOrder_ShipAddress,
+			@CreateOrder_ShipCity ,
+			@CreateOrder_ShipRegion ,
+			@CreateOrder_ShipPostalCode ,
+			@CreateOrder_ShipCountry );
+	INSERT INTO [dbo].[Order Details](
+					  [OrderID]
+					 ,[ProductID] 
+					 ,[UnitPrice] 
+					 ,[Quantity] 	
+					 ,[Discount])
+
+	SELECT @@IDENTITY
+	,[ProductID]
+	,[UnitPrice] 
+	,[Quantity] 	
+	,[Discount]
+	FROM @ListOfOrderDetails;
+	
+END TRY
+BEGIN CATCH
+ROLLBACK;
+END CATCH
+
+
+-- test
+ DECLARE @OrderDetailsData AS [dbo].[Type_CreateOrder]  
+ INSERT  @OrderDetailsData (ProductId, UnitPrice, Quantity, Discount)
+ VALUES (45, 544, 3, 0)
+ DECLARE @dt DATETIME
+ SET @dt=GETDATE()
+ EXEC [dbo].[CreateOrder] @OrderDetailsData, 10250, 'SUPRD', 8,@dt,@dt,@dt, 3, 45, 'name','adress', 'city', 'region', 'postalCode', 'Country'
