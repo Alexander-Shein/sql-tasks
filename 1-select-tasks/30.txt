@@ -1,0 +1,36 @@
+A)-- create procedure to get order by id
+Create procedure [dbo].[GetOrderByID] 
+ @GetOrderByID INT
+
+As 
+BEGIN TRY
+SELECT [o].[OrderID]
+      ,[o].[CustomerID]
+      ,[o].[EmployeeID]
+      ,[o].[OrderDate]
+      ,[o].[RequiredDate]
+      ,[o].[ShippedDate]
+      ,[o].[ShipVia]
+      ,[o].[Freight]
+      ,[o].[ShipName]
+      ,[o].[ShipAddress]
+      ,[o].[ShipCity]
+      ,[o].[ShipRegion]
+      ,[o].[ShipPostalCode]
+      ,[o].[ShipCountry]FROM [dbo].[Orders] [o]
+WHERE [o].[OrderID] = @GetOrderByID;
+
+SELECT [od].[OrderID]
+      ,[od].[ProductID]
+      ,[od].[UnitPrice]
+      ,[od].[Quantity]
+      ,[od].[Discount] FROM [dbo].[Order Details] [od]
+WHERE [od].[OrderID] = @GetOrderByID;
+END TRY
+BEGIN CATCH
+ROLLBACK;
+END CATCH
+
+--test of @GetOrderByID
+EXECUTE [dbo].[GetOrderByID] @GetOrderByID = '10450'
+
