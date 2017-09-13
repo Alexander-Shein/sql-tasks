@@ -3,11 +3,8 @@ Create a SQL query to count current and discontinued products:
 | TotalOfCurrentProducts | TotalOfDiscontinuedProducts |
 
 SELECT DISTINCT(SELECT COUNT(Discontinued) 
-		FROM Northwind.dbo.Products
-		WHERE Discontinued = 0) AS TotalOfCurrentProducts,
-	   (SELECT COUNT(Discontinued) 
-	   	FROM Northwind.dbo.Products
-	   	WHERE Discontinued = 1) AS TotalOfDiscontinuedProducts
-
-	   
-FROM Northwind.dbo.Products
+					   FROM dbo.Products
+					   WHERE Discontinued = 0) AS TotalOfCurrentProducts,
+	    
+				COUNT(Discontinued) AS TotalOfDiscontinuedProducts FROM dbo.Products
+	   			WHERE Discontinued = 1
