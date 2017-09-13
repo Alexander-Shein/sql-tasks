@@ -4,5 +4,5 @@ Create a query to return a list ordered by order id descending:
 
 SELECT OrderID, Quantity*UnitPrice AS [Order Total Price], ROUND(100 * Discount/UnitPrice, 3) AS [Total Order Discount, %] 
 FROM dbo.[Order Details]
-GROUP BY OrderID
+GROUP BY OrderID, Quantity, UnitPrice, Discount
 ORDER BY OrderID DESC
