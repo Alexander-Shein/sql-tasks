@@ -1,8 +1,6 @@
 DROP TABLE IF exists lostupdatedemo;
 CREATE TABLE lostupdatedemo (
 	Id INT,
-	Name VARCHAR(20)
+	VAR INT
 );
-INSERT INTO lostupdatedemo (Id, Name) VALUES (1,'Frist'),(2,'Second');
-SELECT * FROM lostupdatedemo;
-COMMIT;
+INSERT INTO lostupdatedemo (Id, VAR) VALUES (1,10),(2,20);

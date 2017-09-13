@@ -1,4 +1,0 @@
-START TRANSACTION ISOLATION LEVEL Read COMMITTED;
-INSERT INTO PhantomReadDemo (Id, Name) VALUES (3,'Third'),(4,'Fourth');
-SELECT * FROM PhantomReadDemo;
-COMMIT;
