@@ -7,4 +7,4 @@ FROM Northwind.dbo.Employees E
 JOIN Northwind.dbo.Orders O ON E.EmployeeID = O.EmployeeID
 JOIN Northwind.dbo.[Order Details] OD ON O.OrderID = OD.OrderID
 GROUP BY E.EmployeeID, E.FirstName, E.LastName
-ORDER BY [Amount, $]
+ORDER BY [Amount, $] DESC
