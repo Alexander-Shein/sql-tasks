@@ -1,3 +1,8 @@
 Create a query to return all products with category and supplier company names:
 
 | ProductName | CategoryName | SupplierCompanyName |
+
+SELECT P.ProductName, C.CategoryName, S.CompanyName AS SupplierCompanyName
+FROM dbo.Products AS P
+LEFT JOIN dbo.Categories C ON C.CategoryID = P.CategoryID
+LEFT JOIN dbo.Suppliers S ON S.SupplierID = P.SupplierID
