@@ -6,7 +6,7 @@ order data by % - higher percent at the top.
 
 SELECT CustomerID, 
 	   COUNT(CustomerID) AS [Total number of Orders], 
-	   CAST(COUNT(OrderID) AS DECIMAL(6,2))*100/SUM(COUNT(OrderID)) OVER() AS [% of all orders] 
+	   COUNT(OrderID)*100.0/SUM(COUNT(OrderID)) OVER() AS [% of all orders] 
 FROM dbo.Orders 
 GROUP BY CustomerID 
 ORDER BY COUNT(CustomerID) DESC;
