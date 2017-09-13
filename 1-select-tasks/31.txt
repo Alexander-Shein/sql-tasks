@@ -1,0 +1,25 @@
+
+
+Б) Create procedure [dbo].[DeleteOrderById] 
+ @DeleteOrderById INT
+
+As 
+BEGIN TRY
+DELETE FROM [dbo].[Order Details]
+WHERE [dbo].[Order Details].[OrderID] = @DeleteOrderById;
+
+DELETE FROM [dbo].[Orders]
+WHERE [dbo].[Orders].[OrderID] = @DeleteOrderById;
+
+
+
+END TRY
+BEGIN CATCH
+BEGIN TRANSACTION;
+ROLLBACK;
+END CATCH;
+-- test of @DeleteOrderById
+EXECUTE [dbo].[DeleteOrderById] @DeleteOrderById = '10450'
+-- now order 10450 EXTERMINATEED! we can see it with 
+EXECUTE [dbo].[GetOrderByID] @GetOrderByID = '10450'
+
