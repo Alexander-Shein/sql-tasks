@@ -2,3 +2,20 @@ Create a SQL query to display customer details whose total orders amount is more
 
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
 
+Maksim Sarvas : 'SELECT 
+[C].[CustomerID],
+[C].[CompanyName],
+(SELECT SUM([OD].[UnitPrice]*[OD].[Quantity]) 
+FROM [dbo].[Orders] [O] 
+LEFT JOIN [dbo].[Order Details] [OD] 
+ON [O].[OrderID] = [OD].[OrderID]
+WHERE [C].[CustomerID]=[O].[CustomerID]) AS [TotalOrdersAmount, $]
+FROM 
+[dbo].[Customers] [C]
+
+WHERE (SELECT SUM([OD].[UnitPrice]*[OD].[Quantity]) 
+FROM [dbo].[Orders] [O] 
+LEFT JOIN [dbo].[Order Details] [OD] 
+ON [O].[OrderID] = [OD].[OrderID]
+WHERE [C].[CustomerID]=[O].[CustomerID]) > '10000'
+'
