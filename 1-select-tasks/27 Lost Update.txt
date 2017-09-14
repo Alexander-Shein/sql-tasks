@@ -1,0 +1,21 @@
+CREATE TABLE lost_update (id SERIAL, version VARCHAR(20));
+
+
+TERMINAL 1                                      TERMINAL 2
+
+BEGIN;                   
+                                                BEGIN;
+SELECT * FROM lost_update; --v1  
+                                                SELECT * FROM lost_update; --v1
+
+UPDATE lost_update SET "version" = 'v2';        
+                                                UPDATE lost_update SET "version" = 'v3';
+SELECT * FROM lost_update; --'v2'				Waiting TERMINAL 1...
+                                                Waiting TERMINAL 1...
+COMMIT;
+SELECT * FROM lost_update; --'v2'
+                                                SELECT * FROM lost_update; --'v3'
+                                                COMMIT;
+SELECT * FROM lost_update; --'v3'
+
+
