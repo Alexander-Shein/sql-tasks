@@ -30,6 +30,7 @@ CREATE PROCEDURE [dbo].[EditOrder]
 @EditOrder_ShipCountry nvarchar(70)
 As 
 BEGIN TRY
+BEGIN TRANSACTION;
 UPDATE  [dbo].[Orders]
 	SET	
       [CustomerID] = @EditOrder_CustomerID
