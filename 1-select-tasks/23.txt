@@ -1,0 +1,242 @@
+CREATE DATABASE Task23;
+
+USE Task23
+
+CREATE TABLE Formula (
+	FormulaId 		   INT NOT NULL IDENTITY(1, 1),
+	Code 	  		   NVARCHAR(20) NOT NULL DEFAULT(''),
+	Description 	   NVARCHAR(120) NOT NULL DEFAULT(''),
+	FormulaPurpose 	   TINYINT NOT NULL DEFAULT(1),
+	FormulaType 	   TINYINT NOT NULL DEFAULT(1),
+	HasSubExpression   BIT NOT NULL DEFAULT(0),
+	SubExpressionCount TINYINT NOT NULL DEFAULT(0),
+	EditableExpression NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	EvalExpression 	   NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	AcrivationDate 	   DATE NOT NULL,
+	Notes 			   NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	IsActive 		   BIT NOT NULL DEFAULT(1),
+	CreatedBy 		   INT NOT NULL DEFAULT(0),
+	ModifiedBy 		   INT NOT NULL DEFAULT(0),
+	DateCreated 	   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified 	   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT [PK_Formula_Id] 		  PRIMARY KEY(FormulaId),
+	CONSTRAINT [UDX_Formula_Code_U_N] UNIQUE(Code)
+);
+
+CREATE TABLE FormulaSubExpression (
+	FormulaSubExpressionId INT NOT NULL IDENTITY(1, 1),
+	FormulaId 	  		   INT NOT NULL,
+	Description			   NVARCHAR(80) NOT NULL DEFAULT(''),
+	SubExprIndex 	   	   TINYINT NOT NULL DEFAULT(0),
+	EditableSubExpression  NVARCHAR(2000) NOT NULL DEFAULT(''),
+	EvalSubExpression      NVARCHAR(2000) NOT NULL DEFAULT(''),
+	CreatedBy	 		   INT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   INT NOT NULL DEFAULT(0),
+	DateCreated 		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaSubExpression_Id PRIMARY KEY(FormulaSubExpressionId),
+	CONSTRAINT FK_FormulaSubExpression_FormulaId_Formula_Id FOREIGN KEY(FormulaId)
+															REFERENCES Formula(FormulaId)
+);
+
+CREATE TABLE FormulaVariableSet (
+	FormulaVariableSetId INT NOT NULL IDENTITY(1, 1),
+	Code 	  		   	 NVARCHAR(50) NOT NULL DEFAULT(''),
+	Description 	   	 NVARCHAR(80) NOT NULL DEFAULT(''),
+	CanonicalDataType	 TINYINT NOT NULL DEFAULT(1),
+	EvalScope			 TINYINT NOT NULL DEFAULT(1),
+	ConstantValue 		 NVARCHAR(2000) NOT NULL DEFAULT(''),
+	ResolutionTyoe		 TINYINT NOT NULL DEFAULT(1),
+	SqlExpr				 NVARCHAR(4000) NOT NULL DEFAULT(''),
+	EvalExpr			 NVARCHAR(4000) NOT NULL DEFAULT(''),
+	ParamsNumberSqlExpr	 TINYINT NOT NULL DEFAULT(0),
+	ParamsNumberEvalExpr TINYINT NOT NULL DEFAULT(0),
+	IsActive 		   	 BIT NOT NULL DEFAULT(1),
+	CreatedBy 		     INT NOT NULL DEFAULT(0),
+	ModifiedBy 		     INT NOT NULL DEFAULT(0),
+	DateCreated 		 DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified 	   	 DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	 TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariableSet_Id			PRIMARY KEY (FormulaVariableSetId),
+	CONSTRAINT UDX_FormulaVariableSet_Code_U_N 	UNIQUE (Code)
+);
+
+CREATE TABLE FormulaVariable (
+	FormulaVariableId 	   INT NOT NULL IDENTITY(1, 1),
+	FormulaId 	  		   INT NOT NULL,
+	FormulaVariableSetId   INT NOT NULL,
+	DefaultValue 		   NVARCHAR(2000) NOT NULL DEFAULT(''),
+	MinValue	 		   NVARCHAR(50) NOT NULL DEFAULT(0),
+	MaxValue	 		   VARCHAR(50) NOT NULL DEFAULT(0),
+	TimePeriod 			   TINYINT NOT NULL DEFAULT(0),
+	PeriodStartDate 	   DATE NOT NULL,
+	PeriodEndDate 	   	   DATE NOT NULL,
+	CurrencyCode 		   NCHAR(3),
+	CreatedBy	 		   INT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   INT NOT NULL DEFAULT(0),
+	DateCreated 		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariable_Id 	  PRIMARY KEY (FormulaVariableId),
+	CONSTRAINT FK_FormulaVariable_Formula FOREIGN KEY (FormulaId)
+										  REFERENCES Formula (FormulaId),
+	CONSTRAINT FK_FormulaVariable_FormulaVariableSet FOREIGN KEY (FormulaVariableSetId)
+										  			 REFERENCES FormulaVariableSet (FormulaVariableSetId),
+
+	CONSTRAINT IDX_FormulaVariable_FormulaId_FormulaVariableSetId_U_N UNIQUE(FormulaId, FormulaVariableSetId)
+);
+
+CREATE TABLE FormulaVariableParam (
+	FormulaVariableParamId INT NOT NULL IDENTITY(1, 1),
+	FormulaVariableId 	   INT NOT NULL,
+	ParamName   		   NVARCHAR(120) NOT NULL DEFAULT(''),
+	DefaultName	 		   NVARCHAR(4000) NOT NULL DEFAULT(''),
+	CanonicalDataType	   TINYINT NOT NULL DEFAULT(1),
+	IsOverridenRuntime 	   BIT NOT NULL DEFAULT(0),
+	CreatedBy	 		   INT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   INT NOT NULL DEFAULT(0),
+	DateCreated 		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariableParam_Id 	  PRIMARY KEY(FormulaVariableParamId),
+	CONSTRAINT FK_FormulaVariableParam_FormulaVariableId_FormulaVariabale_FormulaVariable_Id 
+		FOREIGN KEY(FormulaVariableId)
+		REFERENCES FormulaVariable(FormulaVariableId)
+);
+
+CREATE TABLE FormulaHistory (
+	FormulaId 		   INT NOT NULL,
+	FormulaHistoryId   INT NOT NULL IDENTITY(1, 1),
+	Code 	  		   NVARCHAR(20) NOT NULL DEFAULT(''),
+	Description 	   NVARCHAR(80) NOT NULL DEFAULT(''),
+	FormulaPurpose 	   TINYINT NOT NULL DEFAULT(1),
+	FormulaType 	   TINYINT NOT NULL DEFAULT(1),
+	HasSubExpression   BIT NOT NULL DEFAULT(0),
+	SubExpressionCount TINYINT NOT NULL DEFAULT(0),
+	EditableExpression NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	EvalExpression 	   NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	AcrivationDate 	   DATE NOT NULL,
+	Notes 			   NVARCHAR(MAX) NOT NULL DEFAULT(''),
+	StartValidTime 	   DATE NOT NULL,
+	EndValidTime 	   DATE NOT NULL,
+	IsActive 		   BIT NOT NULL DEFAULT(1),
+	CreatedBy 		   INT NOT NULL DEFAULT(0),
+	ModifiedBy 		   INT NOT NULL DEFAULT(0),
+	DateCreated 	   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified 	   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaHistory_Id 		PRIMARY KEY(FormulaHistoryId),
+	CONSTRAINT IDX_FormulaHistory_FormulaId_N_N UNIQUE (FormulaId)
+);
+
+CREATE TABLE FormulaSubExpressionHistory (
+	FormulaSubExpressionHistoryId  INT NOT NULL IDENTITY(1, 1),
+	FormulaHistoryId 	  		   INT NOT NULL,
+	FormulaSubExpressionId		   INT NOT NULL,
+	Description			   		   NVARCHAR(80) NOT NULL DEFAULT(''),
+	EditableSubExpression  		   NVARCHAR(2000) NOT NULL DEFAULT(''),
+	EvalSubExpression      		   NVARCHAR(2000) NOT NULL DEFAULT(''),
+	SubExprIndex 	   	   		   TINYINT NOT NULL DEFAULT(0),
+	CrudAction 					   TINYINT NOT NULL DEFAULT(1),
+	CreatedBy	 		   		   INT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   		   INT NOT NULL DEFAULT(0),
+	DateCreated 				   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   		   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaSubExpressionHistory_Id PRIMARY KEY(FormulaSubExpressionHistoryId),
+	CONSTRAINT FK_FormulaSubExpressionHistory_FormulaHistoryId_FormulaHistory_Id FOREIGN KEY(FormulaHistoryId)
+															REFERENCES FormulaHistory(FormulaHistoryId),
+	CONSTRAINT IDX_FormulaSubExpressionHistory_FormulaSubExpressionId_N_N UNIQUE (FormulaSubExpressionId)
+);
+
+CREATE TABLE FormulaVariableSetHistory (
+	FormulaVariableSetHistoryId INT NOT NULL IDENTITY(1, 1),
+	FormulaVariableSetId 		INT NOT NULL,
+	Code 	  		   	 		NVARCHAR(50) NOT NULL DEFAULT(''),
+	Description 	   	 		NVARCHAR(80) NOT NULL DEFAULT(''),
+	CanonicalDataType	 		TINYINT NOT NULL DEFAULT(1),
+	EvalScope			 		TINYINT NOT NULL DEFAULT(1),
+	ConstantValue 		 		NVARCHAR(2000) NOT NULL DEFAULT(''),
+	ResolutionTyoe		 		TINYINT NOT NULL DEFAULT(1),
+	SqlExpr				 		NVARCHAR(4000) NOT NULL DEFAULT(''),
+	EvalExpr			 		NVARCHAR(4000) NOT NULL DEFAULT(''),
+	ParamsNumberSqlExpr	 		TINYINT NOT NULL DEFAULT(0),
+	ParamsNumberEvalExpr 		TINYINT NOT NULL DEFAULT(0),
+	StartValidTime 				DATE NOT NULL,
+	EndValidTime 				DATE NOT NULL,
+	IsActive 		   	 		BIT NOT NULL DEFAULT(1),
+	CreatedBy 		     		INT NOT NULL DEFAULT(0),
+	ModifiedBy 		     		INT NOT NULL DEFAULT(0),
+	DateCreated 		 		DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified 	   	 		DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	 		TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariableSetHistory_Id PRIMARY KEY(FormulaVariableSetHistoryId),
+	CONSTRAINT IDX_FormulaVariableSetHistory_FormulaVariableSetId_N_N UNIQUE (FormulaVariableSetId)
+);
+
+CREATE TABLE FormulaVariableHistory (
+	FormulaVariableHistoryId 	   INT NOT NULL IDENTITY(1, 1),
+	FormulaHistoryId 	  		   INT NOT NULL,
+	FormulaVariableSetHistoryId    INT NOT NULL,
+	FormulaVariableId 	  		   INT NOT NULL,
+	FormulaVariableSetId    	   INT NOT NULL,
+	DefaultValue 				   NVARCHAR(2000) NOT NULL DEFAULT(''),
+	MinValue	 		   		   NVARCHAR(50) NOT NULL DEFAULT(0),
+	MaxValue	 		   		   VARCHAR(50) NOT NULL DEFAULT(0),
+	TimePeriod 			   		   TINYINT NOT NULL DEFAULT(0),
+	PeriodStartDate 	   		   DATE NOT NULL,
+	PeriodEndDate 	   	   		   DATE NOT NULL,
+	CurrencyCode 		   		   NCHAR(3),
+	CrudAction 					   TINYINT NOT NULL DEFAULT(1),
+	CreatedBy	 		   		   INT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   		   INT NOT NULL DEFAULT(0),
+	DateCreated 		   		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   		   DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   		   TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariableHistory_Id PRIMARY KEY(FormulaVariableHistoryId),
+	
+	CONSTRAINT FK_FormulaVariableHistory_FormulaHistoryId_FormulaHistory_Id FOREIGN KEY(FormulaHistoryId)
+										  REFERENCES FormulaHistory(FormulaHistoryId),
+	CONSTRAINT FK_FormulaVariableHistory_FormulaVariableSetHistoryId_FormulaVariableSetHistory_Id FOREIGN KEY(FormulaVariableSetHistoryId)
+										  REFERENCES FormulaVariableSetHistory(FormulaVariableSetHistoryId),
+
+	CONSTRAINT IDX_FormulaVariableHistory_FormulaVariableId_N_N UNIQUE (FormulaVariableId),
+	CONSTRAINT IDX_FormulaVariableHistory_FormulaVariableSetId_N_N UNIQUE (FormulaVariableSetId)
+);
+
+CREATE TABLE FormulaVariableParamHistory (
+	FormulaVariableParamHistoryId INT NOT NULL IDENTITY(1, 1),
+	FormulaVariableHistoryId 	  INT NOT NULL,
+	FormulaVariableParamId	 	  INT NOT NULL,
+	FormulaVariableId		 	  INT NOT NULL,
+	ParamName   		   		  NVARCHAR(120) NOT NULL DEFAULT(''),
+	DefaultName	 		   		  NVARCHAR(4000) NOT NULL DEFAULT(''),
+	CanonicalDataType	   		  TINYINT NOT NULL DEFAULT(1),
+	CreatedBy	 		   		  INT NOT NULL DEFAULT(0),
+	IsOverridenRuntime 	   		  BIT NOT NULL DEFAULT(0),
+	ModifiedBy	 		   		  INT NOT NULL DEFAULT(0),
+	CrudAction 					  TINYINT NOT NULL DEFAULT(1),
+	DateCreated 		   		  DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	DateModified		   		  DATETIME2(7) NOT NULL DEFAULT(GETDATE()),
+	Ts 				   	   		  TIMESTAMP NOT NULL,
+	
+	CONSTRAINT PK_FormulaVariableParamHistory_Id 	  PRIMARY KEY(FormulaVariableParamHistoryId),
+	
+	CONSTRAINT FK_FormulaVariableParamHistory_FormulaVariableHistoryId_FormulaVariabaleHistory_FormulaVariableHistory_Id 
+		FOREIGN KEY(FormulaVariableHistoryId)
+		REFERENCES FormulaVariableHistory(FormulaVariableHistoryId),
+	
+	CONSTRAINT IDX_FormulaVariableParamHistory_FormulaVariableParamId_N_N UNIQUE (FormulaVariableParamId),
+	CONSTRAINT IDX_FormulaVariableParamHistory_FormulaVariableId_N_N UNIQUE(FormulaVariableParamId)
+);
