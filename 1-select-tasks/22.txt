@@ -7,5 +7,10 @@ FROM dbo.Customers C
 JOIN dbo.Orders O ON C.CustomerID = O.CustomerID
 JOIN dbo.[Order Details] OD ON O.OrderID = OD.OrderID
 JOIN dbo.Products P ON OD.ProductID = P.ProductID
-GROUP BY C.CompanyName, P.ProductName, OD.UnitPrice, OD.Quantity
+WHERE OD.UnitPrice = (SELECT MAX(_OD.UnitPrice) 
+					  FROM dbo.[Order Details] _OD 
+					  JOIN dbo.Orders _O ON _OD.OrderID = _O.OrderID
+					  JOIN dbo.Products _P ON _OD.ProductID = _P.ProductID
+					  WHERE C.CustomerID = _O.CustomerID)
+
 ORDER BY OD.UnitPrice DESC
