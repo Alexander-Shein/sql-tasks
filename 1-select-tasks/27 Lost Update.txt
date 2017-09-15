@@ -1,4 +1,6 @@
-CREATE TABLE lost_update (id SERIAL, version VARCHAR(20));
+DROP TABLE IF EXISTS lost_update;
+CREATE TABLE lost_update(id SERIAL, "version" VARCHAR);
+INSERT INTO lost_update ("version") VALUES ('v1');
 
 
 TERMINAL 1                                      TERMINAL 2
