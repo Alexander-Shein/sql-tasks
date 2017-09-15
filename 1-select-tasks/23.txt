@@ -134,7 +134,7 @@ CREATE TABLE FormulaHistory (
 	Ts 				   TIMESTAMP NOT NULL,
 	
 	CONSTRAINT PK_FormulaHistory_Id 		PRIMARY KEY(FormulaHistoryId),
-	CONSTRAINT IDX_FormulaHistory_FormulaId_N_N UNIQUE (FormulaId)
+	INDEX [IDX_FormulaHistory_FormulaId_N_N] ([FormulaId])
 );
 
 CREATE TABLE FormulaSubExpressionHistory (
@@ -155,7 +155,7 @@ CREATE TABLE FormulaSubExpressionHistory (
 	CONSTRAINT PK_FormulaSubExpressionHistory_Id PRIMARY KEY(FormulaSubExpressionHistoryId),
 	CONSTRAINT FK_FormulaSubExpressionHistory_FormulaHistoryId_FormulaHistory_Id FOREIGN KEY(FormulaHistoryId)
 															REFERENCES FormulaHistory(FormulaHistoryId),
-	CONSTRAINT IDX_FormulaSubExpressionHistory_FormulaSubExpressionId_N_N UNIQUE (FormulaSubExpressionId)
+	INDEX [IDX_FormulaSubExpressionHistory_FormulaSubExpressionId_N_N] ([FormulaSubExpressionId])
 );
 
 CREATE TABLE FormulaVariableSetHistory (
@@ -181,7 +181,7 @@ CREATE TABLE FormulaVariableSetHistory (
 	Ts 				   	 		TIMESTAMP NOT NULL,
 	
 	CONSTRAINT PK_FormulaVariableSetHistory_Id PRIMARY KEY(FormulaVariableSetHistoryId),
-	CONSTRAINT IDX_FormulaVariableSetHistory_FormulaVariableSetId_N_N UNIQUE (FormulaVariableSetId)
+	INDEX [IDX_FormulaVariableSetHistory_FormulaVariableSetId_N_N] ([FormulaVariableSetId])
 );
 
 CREATE TABLE FormulaVariableHistory (
@@ -211,8 +211,8 @@ CREATE TABLE FormulaVariableHistory (
 	CONSTRAINT FK_FormulaVariableHistory_FormulaVariableSetHistoryId_FormulaVariableSetHistory_Id FOREIGN KEY(FormulaVariableSetHistoryId)
 										  REFERENCES FormulaVariableSetHistory(FormulaVariableSetHistoryId),
 
-	CONSTRAINT IDX_FormulaVariableHistory_FormulaVariableId_N_N UNIQUE (FormulaVariableId),
-	CONSTRAINT IDX_FormulaVariableHistory_FormulaVariableSetId_N_N UNIQUE (FormulaVariableSetId)
+	INDEX [IDX_FormulaVariableHistory_FormulaVariableId_N_N] ([FormulaVariableId]),
+	INDEX [IDX_FormulaVariableHistory_FormulaVariableSetId_N_N] ([FormulaVariableSetId])
 );
 
 CREATE TABLE FormulaVariableParamHistory (
@@ -237,6 +237,6 @@ CREATE TABLE FormulaVariableParamHistory (
 		FOREIGN KEY(FormulaVariableHistoryId)
 		REFERENCES FormulaVariableHistory(FormulaVariableHistoryId),
 	
-	CONSTRAINT IDX_FormulaVariableParamHistory_FormulaVariableParamId_N_N UNIQUE (FormulaVariableParamId),
-	CONSTRAINT IDX_FormulaVariableParamHistory_FormulaVariableId_N_N UNIQUE(FormulaVariableParamId)
+	INDEX [IDX_FormulaVariableParamHistory_FormulaVariableParamId_N_N] ([FormulaVariableParamId]),
+	INDEX [IDX_FormulaVariableParamHistory_FormulaVariableId_N_N] ([FormulaVariableParamId])
 );
