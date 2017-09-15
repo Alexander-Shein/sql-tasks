@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS phantom;
+CREATE TABLE phantom(id SERIAL, f1 INT);
+INSERT INTO phantom (f1) VALUES (1);
+INSERT INTO phantom (f1) VALUES (2);
+
+
+TERMINAL 1                                     TERMINAL 2
+BEGIN;                                         BEGIN;
+                                               SELECT SUM(f1) FROM phantom; --SUM(f1) = 3
+INSERT INTO phantom (f1) VALUES (3);
+COMMIT;
+                                               SELECT SUM(f1) FROM phantom; --SUM(f1) = 6
+
