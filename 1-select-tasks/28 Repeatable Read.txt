@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS rep_read;
+CREATE TABLE rep_read(id SERIAL, f1 VARCHAR);
+INSERT INTO rep_read (f1) VALUES ('f1');
+
+TERMINAL 1                                          TERMINAL 2
+
+BEGIN;                                              BEGIN;
+                                                    SELECT f1 FROM rep_read WHERE f1='f1'; -- f1='f1'
+UPDATE rep_read SET f1='f2' WHERE f1='f1';
+COMMIT;
+                                                    SELECT f1 FROM rep_read WHERE f1='f1'; -- Not Found
+
