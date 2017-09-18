@@ -3,3 +3,10 @@ Create a SQL query to return next data ordered by city and then by name:
 | Employy Id | Employee Full Name | Title | City |
 
 [Employee Full Name] - First Name and Last Name.
+
+Use Northwind
+;
+
+SELECT EmployeeID, CONCAT(FirstName, ' ', LastName) AS EmployeeFullName, Title, City
+FROM Employees
+ORDER BY City, EmployeeFullName
