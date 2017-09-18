@@ -1,0 +1,15 @@
+CREATE
+	PROCEDURE dbo.DeleteOrderById @OrderID INT 
+	AS BEGIN TRY 
+	DELETE
+		FROM
+			dbo.[Order Details]
+		WHERE
+			OrderID = @OrderID DELETE
+			FROM
+				dbo.Orders
+			WHERE
+				OrderID = @OrderID;
+
+BEGIN CATCH ROLLBACK;
+END CATCH
