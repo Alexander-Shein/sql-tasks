@@ -1,3 +1,11 @@
 Write a SQL statement to get the maximum purchase amount of all the orders.
 
 | Order Id | Maximum Purchase Amount, $ |
+
+USE Northwind
+;
+SELECT TOP 1 ord.OrderID, SUM(ordDet.Quantity*ordDet.UnitPrice) AS [Maximum Purchase Amount, $]
+FROM Orders ord
+JOIN [Order Details] ordDet On ord.OrderID = ordDet.OrderID
+GROUP BY ord.OrderID
+ORDER BY SUM(ordDet.Quantity*ordDet.UnitPrice) DESC
