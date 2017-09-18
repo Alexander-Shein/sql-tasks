@@ -1,2 +1,9 @@
 Write a query to get discontinued Product list:
 | ProductId | Name | 
+
+USE Northwind
+;
+
+SELECT ProductID, ProductName
+FROM Products
+WHERE Discontinued = 1
