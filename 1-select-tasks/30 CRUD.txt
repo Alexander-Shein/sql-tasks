@@ -1,0 +1,33 @@
+a)
+
+CREATE
+	PROCEDURE dbo.GetOrderById @OrderID INT AS BEGIN TRY SELECT
+		OrderID,
+		CustomerID,
+		EmployeeID,
+		OrderDate,
+		RequiredDate,
+		ShippedDate,
+		ShipVia,
+		Freight,
+		ShipName,
+		ShipAddress,
+		ShipCity,
+		ShipRegion,
+		ShipPostalCode,
+		ShipCountry
+	FROM
+		dbo.Orders
+	WHERE
+		OrderID = @OrderID SELECT
+			OrderID,
+			ProductID,
+			UnitPrice,
+			Quantity,
+			Discount
+		FROM
+			dbo.[Order Details]
+		WHERE
+			OrderID = @OrderID;
+END TRY BEGIN CATCH ROLLBACK;
+END CATCH
