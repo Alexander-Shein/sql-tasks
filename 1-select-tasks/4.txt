@@ -3,3 +3,9 @@ Create a query to return:
 | Customer Id | Total number of Orders | % of all orders |
  
 order data by % - higher percent at the top.
+
+DECLARE @TotalNumberOfAllOrders DECIMAL
+SELECT @TotalNumberOfAllOrders = COUNT(*) FROM Northwind.dbo.Orders
+SELECT CustomerID, COUNT(*) AS TotalNumberOfOrders, (COUNT(*)/@TotalNumberOfAllOrders*100) AS '% of all orders'
+FROM Northwind.dbo.Orders
+GROUP BY CustomerID
