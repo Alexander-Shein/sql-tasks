@@ -2,3 +2,32 @@ Create a SQL query to display customer details whose total orders amount is more
 
 | CustomerId | CompanyName | TotalOrdersAmount, $ |
 
+
+USE Northwind
+;
+SELECT cust.CustomerID
+, cust.CompanyName
+, (SELECT SUM(ordDetail.UnitPrice * ordDetail.Quantity)
+	 FROM [Order Details] ordDetail
+	 JOIN Orders ord ON ord.OrderID = ordDetail.OrderID
+	 WHERE cust.CustomerID = ord.CustomerID
+	 ) AS 'TotalOrdersAmount, $'
+FROM Customers cust
+WHERE (SELECT SUM(ordDetail.UnitPrice * ordDetail.Quantity)
+	 FROM [Order Details] ordDetail
+	 JOIN Orders ord ON ord.OrderID = ordDetail.OrderID
+	 WHERE cust.CustomerID = ord.CustomerID
+	 ) > 10000
+
+----------------------------------------------------------------------
+
+USE Northwind
+;
+SELECT cust.CustomerID
+, cust.CompanyName
+, SUM(ordDet.Quantity*ordDet.UnitPrice) AS 'TotalOrdersAmount, $'
+FROM Customers cust
+JOIN Orders ord ON cust.CustomerID = ord.CustomerID
+JOIN [Order Details] ordDet ON ord.OrderID = ordDet.OrderID
+GROUP BY cust.CustomerID, cust.CompanyName
+HAVING SUM(ordDet.Quantity*ordDet.UnitPrice) > 10000
