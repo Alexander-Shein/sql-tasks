@@ -2,3 +2,10 @@ Return all products where product name starts with 'A', 'B', .... 'F' ordered by
 
 | ProductId | ProductName | QuantityPerUnit |
 
+
+USE Northwind
+;
+SELECT ProductID, ProductName, QuantityperUnit
+FROM Products
+WHERE ProductName LIKE '[a-f]%'
+ORDER BY ProductName
