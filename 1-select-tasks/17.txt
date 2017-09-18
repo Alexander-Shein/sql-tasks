@@ -1,3 +1,10 @@
 Create SQL query to display the average price of each categories's products:
 
 | CategoryName | AvgPrice |
+
+USE Northwind
+;
+SELECT category.CategoryName, AVG(product.UnitPrice) AS AvgPrice
+FROM Categories category
+JOIN Products product ON category.CategoryID = product.CategoryID
+GROUP BY category.CategoryName
