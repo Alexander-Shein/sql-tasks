@@ -1,3 +1,8 @@
 Create a query to return all products with category and supplier company names:
 
 | ProductName | CategoryName | SupplierCompanyName |
+
+USE Northwind
+;
+SELECT ProductName, CompanyName AS SupplierCompanyName, CategoryName
+FROM Products, Suppliers, Categories
