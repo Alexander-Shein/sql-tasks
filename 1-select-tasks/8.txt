@@ -4,7 +4,7 @@ Create a query to return:
 
 USE Northwind
 ;
-SELECT category.CategoryName, SUM(product.UnitsInStock) AS TotalNubmerOfProducts
+SELECT category.CategoryName, COUNT(product.ProductID) AS TotalNubmerOfProducts
 FROM Categories category
 JOIN Products product ON category.CategoryID = product.CategoryID
 GROUP BY category.CategoryName
