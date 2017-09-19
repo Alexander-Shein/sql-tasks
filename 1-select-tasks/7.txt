@@ -6,7 +6,10 @@ Full Name - title of courtesy with full name.
 Order data by first column.
 Reports To - Full name. If the employee does not report to anybody leave "-" in the column.
 
+
 USE Northwind
 ;
-SELECT EmployeeId, (FirstName + ' ' + LastName) AS FullName, IIF(ReportsTo IS NULL, CAST('-' AS CHAR), CAST(ReportsTo AS CHAR)) AS ReportsTo
-FROM Employees
+
+SELECT empl1.EmployeeID, (empl1.FirstName + ' ' + empl1.LastName) AS FullName, IIF(empl1.ReportsTo IS NULL, '-', empl2.FirstName + ' ' + empl2.LastName) AS ReportsTo
+FROM Employees empl1
+LEFT JOIN Employees empl2 ON empl1.ReportsTo = empl2.EmployeeID
