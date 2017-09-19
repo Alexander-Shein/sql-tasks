@@ -1,3 +1,19 @@
 Create a SQL query to display the name of each customer along with their most expensive purchased product:
 
 | CompanyName | ProductName | PricePerItem |
+
+USE Northwind
+;
+SELECT DISTINCT c.CompanyName, product.ProductName, ordDet.UnitPrice AS PricePerItem
+FROM Customers c
+JOIN Orders ord ON c.CustomerID = ord.CustomerID
+JOIN [Order Details] ordDet ON ord.OrderID = ordDet.OrderID
+JOIN Products product ON ordDet.ProductID = product.ProductID
+JOIN
+(
+	SELECT MAX(ordDet.UnitPrice) as [maxUnitPrice], ord.CustomerID
+	FROM [Order Details] ordDet
+	JOIN Orders ord ON ordDet.OrderID = ord.OrderID
+	GROUP BY ord.CustomerID
+) [max] ON c.CustomerID = [max].CustomerID
+WHERE ordDet.UnitPrice = [max].[maxUnitPrice]; 
