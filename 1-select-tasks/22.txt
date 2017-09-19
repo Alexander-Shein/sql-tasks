@@ -4,13 +4,16 @@ Create a SQL query to display the name of each customer along with their most ex
 
 USE Northwind
 ;
-SELECT DISTINCT customer.CompanyName, product.ProductName, ordDet.UnitPrice AS PricePerItem
-FROM Customers customer
-JOIN Orders ord ON customer.CustomerID = ord.CustomerID
+SELECT DISTINCT c.CompanyName, product.ProductName, ordDet.UnitPrice AS PricePerItem
+FROM Customers c
+JOIN Orders ord ON c.CustomerID = ord.CustomerID
 JOIN [Order Details] ordDet ON ord.OrderID = ordDet.OrderID
 JOIN Products product ON ordDet.ProductID = product.ProductID
-WHERE ordDet.UnitPrice = (	SELECT MAX(ordDet.UnitPrice)
-						  	FROM [Order Details] ordDet
-						  	JOIN Orders ord ON ordDet.OrderID = ord.OrderID
-						  	WHERE customer.CustomerID = ord.CustomerID
-						  )
+JOIN
+(
+	SELECT MAX(ordDet.UnitPrice) as [maxUnitPrice], ord.CustomerID
+	FROM [Order Details] ordDet
+	JOIN Orders ord ON ordDet.OrderID = ord.OrderID
+	GROUP BY ord.CustomerID
+) [max] ON c.CustomerID = [max].CustomerID
+WHERE ordDet.UnitPrice = [max].[maxUnitPrice]; 
