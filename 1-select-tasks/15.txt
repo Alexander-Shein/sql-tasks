@@ -2,20 +2,12 @@ Create a SQL query to return the total number of orders for every month in 1997 
 
 | January | February | March | April | May | June | July | August | September | November | December |
 
-USE [Northwind]
+USE Northwind
 ;
-
-SELECT
-(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970101') AND ('19970131')) AS January
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970201') AND ('19970228')) AS February
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970301') AND ('19970331')) AS March
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970401') AND ('19970430')) AS April 
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970501') AND ('19970531')) AS May
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970601') AND ('19970630')) AS June
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970701') AND ('19970731')) AS July
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970801') AND ('19970831')) AS August
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970901') AND ('19970930')) AS September
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19971001') AND ('19971031')) AS October
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19971101') AND ('19971130')) AS November
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19971201') AND ('19971231')) AS December
-,(SELECT COUNT(OrderID) FROM Orders WHERE OrderDate BETWEEN ('19970101') AND ('19971231')) AS TotalNumberOfOrdersIn1997
+SELECT [1] AS January,[2] AS February,[3] AS March,[4] AS April,[5] AS May,[6] AS June,[7] AS July,[8] AS August,[9] AS September,[10] AS October,[11] AS November,[12] AS December
+FROM (SELECT [MONTH] = MONTH(OrderDate), [Count] = COUNT(OrderID) FROM Orders WHERE YEAR(OrderDate) = YEAR('1997') GROUP BY MONTH(OrderDate)) monthTable
+PIVOT
+(
+	SUM([Count])
+	FOR [MONTH] IN ([1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12])	
+)AS monthPivot;
