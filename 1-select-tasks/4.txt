@@ -9,7 +9,7 @@ USE Northwind
 
 SELECT CustomerID
 , COUNT(*) AS TotalNumberOfOrders
-, CAST ( COUNT(*) AS DECIMAL ) / SUM(COUNT(*)) OVER() * 100 AS [% of all orders]
-FROM Northwind.dbo.Orders
+, COUNT(*) * 100.0 / SUM(COUNT(*)) OVER() AS [% of all orders]
+FROM Orders
 GROUP BY CustomerID
-ORDER BY CAST ( COUNT(*) AS DECIMAL ) / SUM(COUNT(*)) OVER() * 100 DESC
+ORDER BY COUNT(*) * 100.0 / SUM(COUNT(*)) OVER() DESC
