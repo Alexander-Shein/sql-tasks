@@ -1,3 +1,10 @@
 Create a query to return:
 
 | CategoryName | TotalNumberOfProducts |
+
+USE Northwind
+;
+SELECT category.CategoryName, COUNT(product.ProductID) AS TotalNubmerOfProducts
+FROM Categories category
+JOIN Products product ON category.CategoryID = product.CategoryID
+GROUP BY category.CategoryName
