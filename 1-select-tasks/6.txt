@@ -4,5 +4,7 @@ Create a query to return all products with category and supplier company names:
 
 USE Northwind
 ;
-SELECT ProductName, CompanyName AS SupplierCompanyName, CategoryName
-FROM Products, Suppliers, Categories
+SELECT Products.ProductName, Suppliers.CompanyName AS SupplierCompanyName, Categories.CategoryName
+FROM Products
+JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+JOIN Categories ON Products.CategoryID = Categories.CategoryID
