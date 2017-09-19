@@ -6,5 +6,5 @@ USE Northwind
 ;
 SELECT OrderDate, COUNT(OrderID) AS TotalNumberOfOrders
 FROM Orders
-WHERE OrderDate BETWEEN ('19980101') AND ('19981231')
+WHERE YEAR(OrderDate) = YEAR('1998')
 GROUP BY OrderDate
