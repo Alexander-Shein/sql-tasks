@@ -10,9 +10,12 @@ SELECT @dicontinuedProduct  = COUNT(Discontinued) FROM Products WHERE Discontinu
 SELECT @currentProduct = COUNT(Discontinued) FROM Products WHERE Discontinued = 0
 SELECT @currentProduct AS TotalOfCurrentProducts, @dicontinuedProduct AS TotalOfDiscontinuedProducts
 
-USE Northwind
-;
-
 SELECT 
 (SELECT COUNT(Discontinued) FROM Products WHERE Discontinued = 0) AS TotalOfCurrentProducts
 ,(SELECT COUNT(Discontinued) FROM Products WHERE Discontinued = 1) AS TotalOfDiscontinuedProducts 
+
+SELECT 
+SUM(CASE WHEN Discontinued = 0 THEN COUNT(Discontinued) END) OVER() [TotalOfCurrentProducts]
+, SUM(CASE WHEN Discontinued = 1 THEN COUNT(Discontinued) END) OVER() [TotalOfDiscontinuedProducts ]
+FROM Products
+GROUP BY Discontinued
