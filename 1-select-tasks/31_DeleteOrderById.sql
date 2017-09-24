@@ -5,5 +5,5 @@
 
 CREATE PROCEDURE [dbo].[DeleteOrderById] (@OrderId INT) 
 AS
-DELETE FROM [dbo].[Orders] WHERE [OrderId]=@OrderId;
-DELETE FROM [dbo].[Order Details] WHERE [Order Details].[OrderId]=@OrderId;
+DELETE FROM [dbo].[Orders][o] WHERE [o][OrderID]=@OrderId;
+DELETE FROM [dbo].[Order Details][OD] WHERE [OD].[OrderID]=@OrderId;
