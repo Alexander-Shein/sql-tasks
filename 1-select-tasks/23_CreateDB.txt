@@ -117,6 +117,8 @@ CREATE TABLE [FormulaVariableSetHistory](
 [Ts] TIMESTAMP NOT NULL,
 CONSTRAINT [PK_FormulaVariableSetHistory_Id] PRIMARY KEY([Id]));
 
+CREATE INDEX [IDX_FormulaVariableSetHistory_FormulaVariableSetId] ON  [FormulaVariableSetHistory] ([FormulaVariableSetId]);
+
 CREATE TABLE [FormulaHistory](
 [Id] INT IDENTITY(1,1) NOT NULL,
 [FormulaId] INT NOT NULL,
@@ -141,6 +143,8 @@ CREATE TABLE [FormulaHistory](
 [Ts] TIMESTAMP NOT NULL,
 CONSTRAINT [PK_FormulaHistory_Id] PRIMARY KEY([Id]));
 
+CREATE INDEX [IDX_FormulaHistory_FormulaId] ON  [FormulaHistory] ([FormulaId]);
+
 CREATE TABLE [FormulaVariableHistory](
 [Id] INT IDENTITY(1,1) NOT NULL,
 [FormulaHistoryId] INT NOT NULL,
@@ -164,6 +168,9 @@ CONSTRAINT [FK_FormulaVariableHistory_FormulaHistory] FOREIGN KEY ([FormulaHisto
 CONSTRAINT [FK_FormulaVariableHistory_FormulaVariableSetHistory] FOREIGN KEY ([FormulaVariableSetHistoryId]) REFERENCES [FormulaVariableSetHistory] ([Id]),
 CONSTRAINT [PK_FormulaVariableHistory_Id] PRIMARY KEY([Id]));
 
+CREATE INDEX [IDX_FormulaVariableHistory_FormulaVariableId] ON  [FormulaVariableHistory] ([FormulaVariableId]);
+CREATE INDEX [IDX_FormulaVariableHistory_FormulaVariableSetId] ON  [FormulaVariableHistory] ([FormulaVariableSetId]);
+
 CREATE TABLE [FormulaVariableParamHistory](
 [Id] INT IDENTITY(1,1) NOT NULL,
 [FormulaVariableHistoryId] INT NOT NULL,
@@ -181,6 +188,8 @@ CREATE TABLE [FormulaVariableParamHistory](
 CONSTRAINT [FK_FormulaVariableParamHistory_FormulaVariableHistoryId_FormulaVariableHistory_id] FOREIGN KEY ([FormulaVariableHistoryId]) REFERENCES [FormulaVariableHistory] ([Id]),
 CONSTRAINT [PK_FormulaVariableParamHistory_Id] PRIMARY KEY([Id]));
 
+CREATE INDEX [IDX_FormulaVariableParamHistory_FormulaVariableParamId] ON  [FormulaVariableParamHistory] ([FormulaVariableParamId]);
+
 CREATE TABLE [FormulaSubExpressionHistory](
 [Id] INT IDENTITY(1,1) NOT NULL,
 [FormulaHistoryId] INT NOT NULL,
@@ -197,3 +206,5 @@ CREATE TABLE [FormulaSubExpressionHistory](
 [Ts] TIMESTAMP NOT NULL,
 CONSTRAINT [FK_FormulaSubExpressionHistory_FormulaHistoryId_FormulaHistory_Id] FOREIGN KEY ([FormulaHistoryId]) REFERENCES [FormulaHistory] ([Id]),
 CONSTRAINT [PK_FormulaSubExpressionHistory_Id] PRIMARY KEY([Id]));
+
+CREATE INDEX [IDX_FormulaSubExpressionHistory_FormulaSubExpressionId] ON  [FormulaSubExpressionHistory] ([FormulaSubExpressionId]);
