@@ -1,3 +1,6 @@
+DROP PROCEDURE dbo.UpdateOrder;
+DROP TYPE dbo.OrderDetailsList;
+
 CREATE
 	TYPE dbo.OrderDetailsList AS TABLE
 		(
@@ -44,6 +47,10 @@ CREATE
 				ShipPostalCode = @ShipPostalCode,
 				ShipCountry = @ShipCountry
 				WHERE OrderID = @OrderID
+				
+		DELETE FROM [Order Details]
+   		WHERE OrderId = @OrderId
+				
 		INSERT
 			dbo.[Order Details](
 				ProductID,
@@ -51,7 +58,7 @@ CREATE
 				Quantity,
 				Discount
 			)
-		SELECT @@IDENTITY
+		SELECT  @OrderId
 				ProductID,
 				UnitPrice,
 				Quantity,
